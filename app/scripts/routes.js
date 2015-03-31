@@ -16,7 +16,7 @@ define([
 				requireLogin: false
 			})
 			.when('/', {
-				templateUrl: 'views/main.html',
+				templateUrl: 'views/landingpage.html',
 				requireLogin: true
 			});
 		

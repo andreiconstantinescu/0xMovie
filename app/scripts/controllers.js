@@ -16,12 +16,19 @@ define(['angular'], function (angular) {
 			
 			
 		}])
-		.controller('LandingPageController', ['$scope', 'mvAuthentication', function ($scope, mvAuthentication) {
+		.controller('LandingPageController', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
 			
 			// If user is already authenticated, redirect to home
-			if (mvAuthentication.isUserAuthenticated()) {
+			if (AuthenticationService.isUserAuthenticated()) {
                 $location.path('/');
             }
+			
+			$scope.userAuthenticated = AuthenticationService.isUserAuthenticated();
+			$scope.$on('LoggedIn', function () {
+				$scope.userAuthenticated = AuthenticationService.isUserAuthenticated();
+				$scope.$apply();
+			});
+			
 			
 			$scope.init = function() {
 								
@@ -44,7 +51,8 @@ define(['angular'], function (angular) {
 			
 			$scope.facebookLogin = function () {
 				FB.login(function (response) {
-					console.log("Response");
+					AuthenticationService.setUserAsAuthenticated(response);
+					$scope.$broadcast('LoggedIn');
 				});
 			}
 			
