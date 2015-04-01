@@ -28,7 +28,7 @@ define([
 		
 		// Check the auth status for every route chane
 		$rootScope.$on("$routeChangeStart", function (event, next, current) {
-			// if you're logged out send to login page.
+			// If logged out, send to landing page
 			if (next.requireLogin && !AuthenticationService.isUserAuthenticated()) {
 				$location.path('/landingpage');
 				event.preventDefault();
