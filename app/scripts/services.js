@@ -168,7 +168,6 @@ define(['angular'], function (angular) {
                  * Create a element in the storage engine
                  */
                 save: function (key, value) {
-					console.log("SAVING", localStorage);
                     if (!this._enabled) {
                         if (this._debug) console.log('Engine not available');
                         return false;
@@ -309,18 +308,38 @@ define(['angular'], function (angular) {
 	    .service('AuthenticationService', ['Storage', function (Storage) {
 			
 			// Initialize Storage factory
-			Storage._initialize({debug: true});
-		
+			Storage._initialize({debug: false});
+			var userAuthenticated = false;
+
 			this.isUserAuthenticated = function () {
-				return (Storage.read('facebookLoginData') != undefined);
+				if (userAuthenticated == false) {
+					var facebookLoginData = Storage.read('facebookLoginData');
+					if (facebookLoginData != undefined && facebookLoginData.authResponse) {
+							userAuthenticated = true;
+					}
+				}
+				
+				return userAuthenticated;
 			};
-		
+
 			this.setUserAsAuthenticated = function (fbResponse) {
 				var storageContent = Storage.read('facebookLoginData') || {};
                 storageContent = fbResponse;
                 Storage.save('facebookLoginData', storageContent);
 			};
-	  
+			
+			this.removeUserAsAuthenticated = function () {
+				userAuthenticated = false;
+			};
+			
+			this.eraseAllData = function () {
+				Storage.deleteAllForApp();
+			};
+			
+			this.getUserData = function () {
+				return Storage.read('facebookLoginData');
+			};
+
 			return this;
 		}]);
 });

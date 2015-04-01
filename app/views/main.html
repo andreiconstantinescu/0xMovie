@@ -1,3 +1,19 @@
 <div ng-controller="MainController">
-	<h1 ng-click="test()">Hello World</h1>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="">Moviescribe</a>
+      </div>
+    </nav>
+    
+    <div class="container">
+      <div class="starter-template">
+        <h1>Welcome</h1>
+        <p class="lead">If you see this page it means you're logged in.</p>
+        <a href class="lead" ng-click="logout()">Sign out</a>
+        <br>
+        <br>
+        <p style="word-wrap: break-word;">{{userData}}</p>
+      </div>
+
+    </div><!-- /.container -->
 </div>

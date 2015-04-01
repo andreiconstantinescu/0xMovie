@@ -8,30 +8,27 @@ define(['angular'], function (angular) {
 	'use strict';
 	
 	return angular.module('MovieScribe.Controllers', [])
-		.controller('MainController', ['$scope', function ($scope) {
+		.controller('MainController', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
 			
-			$scope.test = function () {
-				console.log("TESTING");
+			$scope.logout = function () {
+				// Delete user data
+				AuthenticationService.eraseAllData();
+                AuthenticationService.removeUserAsAuthenticated(false);
+				
+				// Send the user to the landing page
+				$location.path('/landingpage');
 			};
-			
-			
+			$scope.userData = AuthenticationService.getUserData();
 		}])
-		.controller('LandingPageController', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
+		.controller('LandingPageController', ['$scope', '$location', '$timeout', 'AuthenticationService', function ($scope, $location, $timeout, AuthenticationService) {
 			
 			// If user is already authenticated, redirect to home
 			if (AuthenticationService.isUserAuthenticated()) {
                 $location.path('/');
             }
-			
-			$scope.userAuthenticated = AuthenticationService.isUserAuthenticated();
-			$scope.$on('LoggedIn', function () {
-				$scope.userAuthenticated = AuthenticationService.isUserAuthenticated();
-				$scope.$apply();
-			});
-			
-			
+						
 			$scope.init = function() {
-								
+
                 window.fbAsyncInit = function() {
 					FB.init({
 					  appId      : '883126045059442',
@@ -48,13 +45,19 @@ define(['angular'], function (angular) {
 					fjs.parentNode.insertBefore(js, fjs);
 				}(document, 'script', 'facebook-jssdk'));
             };
-			
+
 			$scope.facebookLogin = function () {
 				FB.login(function (response) {
 					AuthenticationService.setUserAsAuthenticated(response);
-					$scope.$broadcast('LoggedIn');
+					$timeout(function () {
+						$location.path('/');
+					});
 				});
 			}
 			
+			$scope.test = function () {
+				$location.path('/');
+			};
+
 		}]);
 });
