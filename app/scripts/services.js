@@ -305,41 +305,87 @@ define(['angular'], function (angular) {
 
             return service;
         }])
-	    .service('AuthenticationService', ['Storage', function (Storage) {
+		.service('Session', function () {
+			this.create = function (accessToken, userId) {
+				this.accessToken = accessToken;
+				this.userId = userId;
+			};
+			this.destroy = function () {
+				this.accessToken = null;
+				this.userId = null;
+			};
+		})
+	    .factory('AuthenticationService', ['$q', '$location', 'Storage', 'Session', function ($q, $location, Storage, Session) {
 			
-			// Initialize Storage factory
+			var authSrv = {};
+			
+			// Initialize Facebook API
+			(function () {
+
+                window.fbAsyncInit = function() {
+					FB.init({
+					  appId      : '883126045059442',
+					  cookie 	 : true,
+					  xfbml      : true,
+					  version    : 'v2.3'
+					});
+				  };
+
+				(function(d, s, id){
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) {return;}
+					js = d.createElement(s); js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js";
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+            })();
+			
+			// Initialize Storage
 			Storage._initialize({debug: false});
+			
+			// Try to restore session
+			var storageLoginData = Storage.read('loginData') || {};
+			if (storageLoginData.authResponse) {
+				Session.create(storageLoginData.authResponse.accessToken, storageLoginData.authResponse.userID);
+				console.log("Session restored", Session);
+			}
+			
+			// Local/Private variables
 			var userAuthenticated = false;
-
-			this.isUserAuthenticated = function () {
-				if (userAuthenticated == false) {
-					var facebookLoginData = Storage.read('facebookLoginData');
-					if (facebookLoginData != undefined && facebookLoginData.authResponse) {
-							userAuthenticated = true;
-					}
-				}
-				
-				return userAuthenticated;
+			
+			// Service methods
+			authSrv.facebookLogin = function () {
+				var deffered = $q.defer();
+				FB.login(function (response) {
+					console.log("Logged in with Facebook");
+					Session.create(response.authResponse.accessToken, response.authResponse.userID);
+					deffered.resolve(response);
+				});
+				return deffered.promise;
 			};
-
-			this.setUserAsAuthenticated = function (fbResponse) {
-				var storageContent = Storage.read('facebookLoginData') || {};
+			authSrv.isAuthenticated = function () {
+				return !!Session.userId;
+			};
+			authSrv.setLoginData = function (fbResponse) {
+				var storageContent = Storage.read('loginData') || {};
                 storageContent = fbResponse;
-                Storage.save('facebookLoginData', storageContent);
+                Storage.save('loginData', storageContent);
 			};
-			
-			this.removeUserAsAuthenticated = function () {
-				userAuthenticated = false;
-			};
-			
-			this.eraseAllData = function () {
+			authSrv.logout = function () {
+				// Destroy current session
+				Session.destroy();
+				// Delete Storage data
+				authSrv.eraseAllData();
+				// Redirect to landing page
+				$location.path('/landingpage');
+			}
+			authSrv.eraseAllData = function () {
 				Storage.deleteAllForApp();
 			};
-			
-			this.getUserData = function () {
-				return Storage.read('facebookLoginData');
+			authSrv.getUserData = function () {
+				return Storage.read('loginData');
 			};
 
-			return this;
+			return authSrv;
 		}]);
 });

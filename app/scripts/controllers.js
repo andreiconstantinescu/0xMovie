@@ -10,54 +10,30 @@ define(['angular'], function (angular) {
 	return angular.module('MovieScribe.Controllers', [])
 		.controller('MainController', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
 			
-			$scope.logout = function () {
-				// Delete user data
-				AuthenticationService.eraseAllData();
-                AuthenticationService.removeUserAsAuthenticated(false);
-				
-				// Send the user to the landing page
-				$location.path('/landingpage');
-			};
-			$scope.userData = AuthenticationService.getUserData();
-		}])
-		.controller('LandingPageController', ['$scope', '$location', '$timeout', 'AuthenticationService', function ($scope, $location, $timeout, AuthenticationService) {
 			
+			$scope.loginData = AuthenticationService.getUserData();
+			
+			$scope.testLogin = function () {
+				AuthenticationService.facebookLogin();
+			};
+			
+			$scope.logout = AuthenticationService.logout;
+		}])
+		.controller('LandingPageController', ['$scope', '$rootScope', '$location', '$timeout', 'AUTH_EVENTS', 'AuthenticationService', function ($scope, $rootScope, $location, $timeout, AUTH_EVENTS, AuthenticationService) {			
 			// If user is already authenticated, redirect to home
-			if (AuthenticationService.isUserAuthenticated()) {
+			if (AuthenticationService.isAuthenticated()) {
                 $location.path('/');
             }
-						
-			$scope.init = function() {
-
-                window.fbAsyncInit = function() {
-					FB.init({
-					  appId      : '883126045059442',
-					  xfbml      : true,
-					  version    : 'v2.3'
-					});
-				  };
-
-				(function(d, s, id){
-					var js, fjs = d.getElementsByTagName(s)[0];
-					if (d.getElementById(id)) {return;}
-					js = d.createElement(s); js.id = id;
-					js.src = "//connect.facebook.net/en_US/sdk.js";
-					fjs.parentNode.insertBefore(js, fjs);
-				}(document, 'script', 'facebook-jssdk'));
-            };
-
+			
+			// Scope methods (available in UI)
 			$scope.facebookLogin = function () {
-				FB.login(function (response) {
-					AuthenticationService.setUserAsAuthenticated(response);
-					$timeout(function () {
-						$location.path('/');
-					});
+				AuthenticationService.facebookLogin().then(function (fbResponse) {
+					$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+					AuthenticationService.setLoginData(fbResponse);
+					$location.path('/');
+				}, function () {
+					$rootScope.$broadcast(AUTH_EVENTS.loginFailed);
 				});
 			}
-			
-			$scope.test = function () {
-				$location.path('/');
-			};
-
 		}]);
 });
