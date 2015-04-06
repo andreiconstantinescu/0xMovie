@@ -38,7 +38,7 @@ body {
   width: 100%;
   height: 100%; /* For at least Firefox */
   min-height: 100%;
-  background: url('../images/landing-page.jpg');
+  background: url('../images/landing-page1.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -72,7 +72,7 @@ body {
 }
 .navbar-brand {
   text-align: center;
-  color: #00a6bf !important;
+  color: #3498db !important;
   height: 40px;
   padding: 9px 15px;
   font-weight: 600;
@@ -163,3 +163,10 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+
+
+.recommendation-result {
+	margin-top: 40px;
+}
+.recommendation-result .btn {
+	margin-bottom: 20px;

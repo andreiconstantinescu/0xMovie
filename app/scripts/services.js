@@ -305,7 +305,84 @@ define(['angular'], function (angular) {
 
             return service;
         }])
+		.service('OMDB', ['$http', function ($http) {
+			var service = {
+				getMovie: function (url) {
+					return $http.get(url);
+				},
+				vladTest: function () {
+					
+					var req = {
+						method: 'GET',
+						url: 'http://188.24.169.17:8080/RecommendationSystem/api/movies/John',
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					}
+					
+					return $http(req).
+						success(function(data, status, headers, config) {
+							console.log("SUCCESS", data);
+						}).
+						error(function(data, status, headers, config) {
+							console.log("ERROR", data);
+						});
+				}
+			};
+			
+			return service;
+		}])
+		.service('MovieScribeAPI', ['$http', function ($http) {
+			
+			var service = {
+				getMovies: function () {
+					var url = "http://86.127.142.109:8080/RecommendationSystem/movies";
+					return $http.get(url);
+				}
+			};
+			
+//			var localMovies = null;
+//			service.getMovies().
+//				success(function(data, status, headers, config) {
+//					console.log("getMovies Success");
+//					console.log(data);
+//					
+//					localMovies = data;
+//					$rootScope.$broadcast('syncUpdate');
+//				}).
+//				error(function(data, status, headers, config) {
+//					console.log("getMovies Error");
+//				});
+			
+			
+			return service;
+		}])
+			
+			
+//		.service('Factory', ['AuthenticationService' function () {
+//		  
+//		  return null;
+//		}])
 	    .service('AuthenticationService', ['Storage', function (Storage) {
+			
+			// Initialize Facebook SDK
+			(function () {
+				window.fbAsyncInit = function() {
+					FB.init({
+					  appId      : '883126045059442',
+					  xfbml      : true,
+					  version    : 'v2.3'
+					});
+				  };
+
+				(function(d, s, id){
+					var js, fjs = d.getElementsByTagName(s)[0];
+					if (d.getElementById(id)) {return;}
+					js = d.createElement(s); js.id = id;
+					js.src = "//connect.facebook.net/en_US/sdk.js";
+					fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+			})();
 			
 			// Initialize Storage factory
 			Storage._initialize({debug: false});

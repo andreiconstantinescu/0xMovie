@@ -1,19 +1,59 @@
 <div ng-controller="MainController">
 	<nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="">Moviescribe</a>
-      </div>
-    </nav>
-    
-    <div class="container">
-      <div class="starter-template">
-        <h1>Welcome</h1>
-        <p class="lead">If you see this page it means you're logged in.</p>
-        <a href class="lead" ng-click="logout()">Sign out</a>
-        <br>
-        <br>
-        <p style="word-wrap: break-word;">{{userData}}</p>
-      </div>
+		<div class="container">
+			<a class="navbar-brand">Moviescribe</a>
+		</div>
+	</nav>
 
-    </div><!-- /.container -->
+	<div class="container">	
+		<div class="starter-template">
+			<div>
+				<h1>Welcome</h1>
+				<a href class="lead" ng-click="logout()">(Sign out)</a>
+			</div>
+		</div>
+		<div>
+		
+		<form ng-submit="showRecommendations()" class="input-group" action="">
+			<input type="text" class="form-control" placeholder="Start by typing a movie name" ng-model="recommendationInput">
+			<span class="input-group-btn">
+				<input type="button" class="btn btn-primary" value="Show recommendations">
+			</span>
+		</form>
+		
+		
+		<div class="recommendation-result">
+		
+			<div>
+				<img ng-src="{{imageSrc}}">
+			</div>
+		
+			<button class="btn btn-default">Up</button>
+			<button class="btn btn-default">Down</button>
+			
+			<div class="well">
+				<h4>{{movie.Actors}}</h4>
+				<h4>{{movie.Awards}}</h4>
+				<h4>{{movie.Country}}</h4>
+				<h4>{{movie.Director}}</h4>
+				<h4>{{movie.Genre}}</h4>
+				<h4>{{movie.Language}}</h4>
+				<h4>{{movie.Metascore}}</h4>
+				<h4>{{movie.Plot}}</h4>
+				<h4>{{movie.Poster}}</h4>
+				<h4>{{movie.Rated}}</h4>
+				<h4>{{movie.Released}}</h4>
+				<h4>{{movie.Response}}</h4>
+				<h4>{{movie.Runtime}}</h4>
+				<h4>{{movie.Title}}</h4>
+				<h4>{{movie.Type}}</h4>
+				<h4>{{movie.Writer}}</h4>
+				<h4>{{movie.Year}}</h4>
+				<h4>{{movie.imdbID}}</h4>
+				<h4>{{movie.imdbRating}}</h4>
+				<h4>{{movie.imdbVotes}}</h4>
+			</div>
+		</div>
+		
+	</div>
 </div>
