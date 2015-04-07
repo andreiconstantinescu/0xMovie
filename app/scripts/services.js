@@ -357,12 +357,6 @@ define(['angular'], function (angular) {
 			
 			return service;
 		}])
-			
-			
-//		.service('Factory', ['AuthenticationService' function () {
-//		  
-//		  return null;
-//		}])
 	    .service('AuthenticationService', ['Storage', function (Storage) {
 			
 			// Initialize Facebook SDK

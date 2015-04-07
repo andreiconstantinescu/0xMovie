@@ -166,7 +166,12 @@ body {
 
 
 .recommendation-result {
-	margin-top: 40px;
+	margin-top: 20px;
 }
 .recommendation-result .btn {
 	margin-bottom: 20px;
+}
+.recommendation-result .well {
+	background-color: white;
+	box-shadow: 0 2px 6px rgba(0,0,0,.12);
+}

@@ -12,26 +12,28 @@
 				<a href class="lead" ng-click="logout()">(Sign out)</a>
 			</div>
 		</div>
-		<div>
+	<div>
 		
+<!--
 		<form ng-submit="showRecommendations()" class="input-group" action="">
 			<input type="text" class="form-control" placeholder="Start by typing a movie name" ng-model="recommendationInput">
 			<span class="input-group-btn">
-				<input type="button" class="btn btn-primary" value="Show recommendations">
+				<input type="button" class="btn btn-primary" value="Show recommendations" ng-click="showRecommendations()">
 			</span>
 		</form>
+-->
 		
 		
 		<div class="recommendation-result">
-		
-			<div>
-				<img ng-src="{{imageSrc}}">
-			</div>
-		
-			<button class="btn btn-default">Up</button>
-			<button class="btn btn-default">Down</button>
+			<div ng-repeat="movie in movies" class="well">
 			
-			<div class="well">
+				<div>
+					<img ng-src="{{movie.Poster}}">
+				</div>
+
+				<button class="btn btn-default">Up</button>
+				<button class="btn btn-default">Down</button>
+			
 				<h4>{{movie.Actors}}</h4>
 				<h4>{{movie.Awards}}</h4>
 				<h4>{{movie.Country}}</h4>
