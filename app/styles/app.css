@@ -211,9 +211,13 @@ body {
 	border: none;
 }
 
-.movie-imdbRating, .movie-metascore {
+.movie-metascore {
 	font-size: 1.5em;
 }
+.movie-imdbRating {
+	font-size: 2em;
+} 
+
 .movie-imdbVotes {
 	font-size: 1.2em;
 }
