@@ -5,7 +5,7 @@
 		</div>
 	</nav>
 
-	<div class="container">	
+	<div class="container">
 		<div class="starter-template">
 			<div>
 				<h1>Welcome</h1>
@@ -13,7 +13,7 @@
 			</div>
 		</div>
 	<div>
-		
+
 <!--
 		<form ng-submit="showRecommendations()" class="input-group" action="">
 			<input type="text" class="form-control" placeholder="Start by typing a movie name" ng-model="recommendationInput">
@@ -22,40 +22,69 @@
 			</span>
 		</form>
 -->
-		
-		
+
+
 		<div class="recommendation-result">
 			<div ng-repeat="movie in movies" class="well">
-			
-				<div>
-					<img ng-src="{{movie.Poster}}">
+				<div class="row">
+					<div class="col-sm-6 movie">
+						<img class='movie-poster' style='width:100%; height: auto' ng-src="{{movie.Poster}}">
+					</div>
+					<div class="col-sm-6">
+						<div class="basic-info">
+							<span class='movie-title'>{{movie.Title}}</span>
+							<span class='movie-year'>({{movie.Year}})</span>
+							<span class='movie-rated'>{{movie.Rated}}</span>
+						</div>
+						<div class="votes">
+							<button class="btn btn-default">Up</button>
+							<button class="btn btn-default">Down</button>
+						</div>
+						<hr>
+						<div class="release-info">
+							<span class='movie-runtime'>{{movie.Runtime}}</span>
+							<span class='movie-genre'>{{movie.Genre}}</span>
+							<span class='movie-released'>{{movie.Released}}</span>
+							<span class='movie-country'>{{movie.Country}}</span>
+							<span class='movie-language'>{{movie.Language}}</span>
+						</div>
+						<div class="rating-info">
+							<span class="imdb">
+								<span class='movie-ladder'>IMDB Rating:</span>
+								<span class='movie-imdbRating'>{{movie.imdbRating}}</span>
+								<span class='movie-ladder'>IMDB Votes:</span>
+								<span class='movie-imdbVotes'>{{movie.imdbVotes}}</span>
+							</span>
+							<span class="metascore">
+								<span class='movie-ladder'>Metascore:</span>
+								<span class='movie-metascore'>{{movie.Metascore}}</span>
+							</span>
+							<div class="awards">
+								<a class='movie-imdbLink' href='http://www.imdb.com/title/{{movie.imdbID}}'>IMDB Link</a>
+								<span class='movie-awards'>{{movie.Awards}}</span>
+							</div>
+							<div class="more-info">
+							<div class='movie-actors'>
+								<h4>Starring</h4>
+								{{movie.Actors}}</div>
+							<div class='movie-writer'>
+								<h4>Written by</h4>
+								{{movie.Writer}}</div>
+							<div class='movie-director'>
+								<h4>Directed by</h4>
+								{{movie.Director}}</div>
+							<div class='movie-plot'>
+								<h4>Plot</h4>{{movie.Plot}}</div>
+
+						</div>
+						</div>
+					</div>
 				</div>
 
-				<button class="btn btn-default">Up</button>
-				<button class="btn btn-default">Down</button>
-			
-				<h4>{{movie.Actors}}</h4>
-				<h4>{{movie.Awards}}</h4>
-				<h4>{{movie.Country}}</h4>
-				<h4>{{movie.Director}}</h4>
-				<h4>{{movie.Genre}}</h4>
-				<h4>{{movie.Language}}</h4>
-				<h4>{{movie.Metascore}}</h4>
-				<h4>{{movie.Plot}}</h4>
-				<h4>{{movie.Poster}}</h4>
-				<h4>{{movie.Rated}}</h4>
-				<h4>{{movie.Released}}</h4>
-				<h4>{{movie.Response}}</h4>
-				<h4>{{movie.Runtime}}</h4>
-				<h4>{{movie.Title}}</h4>
-				<h4>{{movie.Type}}</h4>
-				<h4>{{movie.Writer}}</h4>
-				<h4>{{movie.Year}}</h4>
-				<h4>{{movie.imdbID}}</h4>
-				<h4>{{movie.imdbRating}}</h4>
-				<h4>{{movie.imdbVotes}}</h4>
+
+
 			</div>
 		</div>
-		
+
 	</div>
 </div>

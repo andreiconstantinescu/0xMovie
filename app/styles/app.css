@@ -175,3 +175,74 @@ body {
 	background-color: white;
 	box-shadow: 0 2px 6px rgba(0,0,0,.12);
 }
+
+.movie-title {
+	font-size: 3em;
+}
+
+.movie-rated {
+	margin-left: 0.5em;
+	padding-left: 0.5em;
+	border-left: 1px solid #efefef;
+}
+.movie-runtime, .movie-genre, .movie-released, .movie-country {
+	margin-right: 0.5em;
+	padding-right: 0.5em;
+	border-right: 1px solid #efefef;
+}
+.rating-info {
+	margin-top: 1em;
+}
+
+.rating-info .imdb span, .movie-imdbLink {
+	margin-right: 0.5em;
+	padding-right: 0.5em;
+	border-right: 1px solid #efefef;
+}
+
+.rating-info .metascore .movie-ladder{
+	margin-right: 0.5em;
+	padding-right: 0.5em;
+}
+
+.rating-info .imdb .movie-ladder, .rating-info .metascore  {
+	margin: none;
+	padding: none;
+	border: none;
+}
+
+.movie-imdbRating, .movie-metascore {
+	font-size: 1.5em;
+}
+.movie-imdbVotes {
+	font-size: 1.2em;
+}
+
+.awards {
+	margin-top: 0.3em;
+	margin-bottom: 0.5em;
+}
+
+.movie {
+	text-align: center;
+}
+
+.movie-poster{
+	width: 80% !important;
+}
+
+.more-info {
+	margin-top: 1em;
+}
+
+.movie-actors, .movie-writer, .movie-director {
+	margin-bottom: 2em;
+}
+
+.basic-info, .votes {
+	display: inline-block;
+}
+
+.votes {
+	float: right;
+}
