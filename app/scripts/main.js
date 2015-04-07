@@ -8,7 +8,8 @@ require.config({
 		'domReady': '../../bower_components/requirejs-domready/domReady',
 		'angular': '../../bower_components/angular/angular',
 		'angularRoute': '../../bower_components/angular-route/angular-route',
-		'uiBootstrap': '../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min'
+		'uiBootstrap': '../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min',
+		'angular-velocity': '../../bower_components/angular-velocity/angular-velocity.min'
 	},
 	shim: {
 		'angular': {

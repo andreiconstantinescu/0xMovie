@@ -412,5 +412,30 @@ define(['angular'], function (angular) {
 			};
 
 			return this;
+		}])
+		.service('Trailers', ['$http', function ($http) {
+			console.log('initialize Trailers');
+			
+			var service = {
+				getTrailer: function (movie) {
+					var search = {
+						key: '9d2bff12ed955c7f1f74b83187f188ae',
+						id: null,
+						year: null,
+						movie: movie,
+						options: {
+							host: 'api.themoviedb.org',
+							port: 443,
+							path: null
+						}
+					}
+					search.options.path = encodeURI('/3/search/movie?api_key=' + search.key + '&query=' + search.movie + ((search.year !== null) ? '&year='+search.year : ''));
+					
+					var url = search.options.host + ":" + search.options.port + search.options.path;
+					console.log(url);
+				}
+			};
+			
+			return service;	
 		}]);
 });

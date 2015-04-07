@@ -13,19 +13,20 @@
 			</div>
 		</div>
 	<div>
+		
+		<div class="velocity-transition-slideUpIn" ng-show="afiseaza">
+    		I've been animated with Velocity and Angular!
+		</div>	
 
-<!--
 		<form ng-submit="showRecommendations()" class="input-group" action="">
 			<input type="text" class="form-control" placeholder="Start by typing a movie name" ng-model="recommendationInput">
 			<span class="input-group-btn">
 				<input type="button" class="btn btn-primary" value="Show recommendations" ng-click="showRecommendations()">
 			</span>
 		</form>
--->
-
 
 		<div class="recommendation-result">
-			<div ng-repeat="movie in movies" class="well">
+			<div class="well">
 				<div class="row">
 					<div class="col-sm-6 movie">
 						<img class='movie-poster' style='width:100%; height: auto' ng-src="{{movie.Poster}}">

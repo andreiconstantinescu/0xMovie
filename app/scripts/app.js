@@ -19,6 +19,8 @@ define([
 		'ui.bootstrap',
 		'angularModalService',
 		'MovieScribe.Services',
-		'MovieScribe.Controllers'
+		'MovieScribe.Controllers',
+		'angular-velocity',
+		'ngAnimate'
 	]);
 });
