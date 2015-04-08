@@ -44,9 +44,40 @@ define(['angular'], function (angular) {
 				});
 			};
 			
-			$scope.showRecommendations = function () {
+			function compare(a,b) {
+				if (parseInt(a.imdbVotes) < parseInt(b.imdbVotes)) {
+			 		return 1;
+				}
+				if (parseInt(a.imdbVotes) > parseInt(b.imdbVotes)) {
+					return -1;
+				}
+				return 0;
+			}
+			
+			$scope.showRecommendations = function (movieObj) {
 								
-				console.log("Trying to display notifications");
+				console.log("Trying to display recommendation");
+				
+				var genre = movieObj.Genre.split(','); // array of genres
+				console.log("GENRES", genre);
+				
+				$scope.results = [];
+				$timeout(function () {
+					for (var i = 0 ; i < $scope.movies.length; i++) {
+
+						var a = $scope.movies[i].Genre;
+						var b = $scope.searchInput.toLowerCase();
+
+						if (a.indexOf(genre[0]) > -1 && movieObj.Title != $scope.movies[i].Title) {
+//							$scope.movie = $scope.movies[i];
+							$scope.results.push($scope.movies[i]);
+							$scope.displayMovies = true;
+						}
+					}
+					$scope.results.sort(compare);
+					console.log($scope.results);
+					$scope.$apply();
+				});
 				
 				
 				
