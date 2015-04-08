@@ -18,15 +18,16 @@
     		I've been animated with Velocity and Angular!
 		</div>	
 
-		<form ng-submit="showRecommendations()" class="input-group" action="">
-			<input type="text" class="form-control" placeholder="Start by typing a movie name" ng-model="recommendationInput">
+		<form ng-submit="searchMovie()" class="input-group" action="">
+			<input type="text" class="form-control" placeholder="Start by typing a movie name" ng-model="searchInput">
 			<span class="input-group-btn">
-				<input type="button" class="btn btn-primary" value="Show recommendations" ng-click="showRecommendations()">
+				<input type="button" class="btn btn-info" value="Search" ng-click="searchMovie()">
+				
 			</span>
 		</form>
 
-		<div class="recommendation-result">
-			<div class="well">
+		<div ng-show="displayMovies" class="recommendation-result">
+			<div ng-repeat="movie in results" class="well">
 				<div class="row">
 					<div class="col-sm-6 movie">
 						<img class='movie-poster' style='width:100%; height: auto' ng-src="{{movie.Poster}}">
@@ -37,9 +38,9 @@
 							<span class='movie-year'>({{movie.Year}})</span>
 							<span class='movie-rated'>{{movie.Rated}}</span>
 						</div>
+						
 						<div class="votes">
-							<button class="btn btn-default">Up</button>
-							<button class="btn btn-default">Down</button>
+							<input type="button" class="btn btn-primary" value="Show recommendations" ng-click="showRecommendations()">
 						</div>
 						<hr>
 						<div class="release-info">
