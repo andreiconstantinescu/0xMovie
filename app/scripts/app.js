@@ -7,6 +7,7 @@
 define([
 	'angular',
 	'angularRoute',
+	'angularCookies',
 	'uiBootstrap',
 	'services',
 	'controllers'
@@ -21,6 +22,7 @@ define([
 		'MovieScribe.Services',
 		'MovieScribe.Controllers',
 		'angular-velocity',
-		'ngAnimate'
+		'ngAnimate',
+		'ngCookies'
 	]);
 });
