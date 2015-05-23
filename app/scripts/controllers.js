@@ -8,13 +8,25 @@ define(['angular'], function (angular) {
 	'use strict';
 	
 	return angular.module('MovieScribe.Controllers', [])
-		.controller('MainController', ['$scope', '$rootScope', '$location', '$timeout', '$http', 'AuthenticationService', function ($scope, $rootScope, $location, $timeout, $http, AuthenticationService) {
+		.controller('MainController', ['$scope', '$rootScope', '$location', '$timeout', '$http', 'AuthenticationService', 'WebDatabase', function ($scope, $rootScope, $location, $timeout, $http, AuthenticationService, WebDatabase) {
+
+			// This will make the initial requests. (AllMovies, LikedMovies, Charts);
+			WebDatabase.init();
+
+			// Callback when WebDatabase.getAllMovies is done
+			var removeGetAllMoviesDone = $rootScope.$on('getAllMoviesDone', function () {
+				$scope.movies = WebDatabase.getAllMovies();
+				console.log($scope.movies);
+			});
+
+			// Callback when WebDatabase.getAllLikedMovies is done
+			var removeGetAllLikedMovies = $rootScope.$on('getAllMoviesDone', function () {
+
+			});
 			
 			$scope.searchInput = "";
 			$scope.displayMovies = false;
 			$scope.movie = null;
-
-
 
 			$scope.searchMovie = function () {
 				// TODO improve this
@@ -80,6 +92,12 @@ define(['angular'], function (angular) {
 			$scope.logout = function () {
 				AuthenticationService.logout();
 			};
+
+			// Prevent memory leaks
+			$scope.$on('$destroy', function () {
+				removeGetAllMoviesDone();
+				removeGetAllLikedMovies();
+			});
 		}])
 		.controller('LandingPageController', ['$scope', '$location', '$timeout', '$http', 'AuthenticationService', function ($scope, $location, $timeout, $http, AuthenticationService) {
 			
@@ -89,12 +107,32 @@ define(['angular'], function (angular) {
             }
 
 			$scope.facebookLogin = function () {
-				FB.login(function (response) {
-					console.log(response);
-					AuthenticationService.setUserAsAuthenticated(response);
-					$timeout(function () {
-						$location.path('/');
+				FB.login(function (res) {
+					console.log(res);
+
+					var accessToken = res.authResponse.accessToken;
+					console.log(accessToken);
+
+					AuthenticationService.loginWithFacebok(accessToken).then(function (response) {
+
+						if (response.data) {
+							console.log("RASPOUNDASDAS", response);
+							AuthenticationService.setUserAsAuthenticated(response.ID, accessToken);
+							$timeout(function () {
+								$location.path('/');
+							});
+						} else {
+							AuthenticationService.loginWithFacebok(accessToken).then(function (responseSecond) {
+								console.log("2222RASPOUNDASDAS", responseSecond);
+								AuthenticationService.setUserAsAuthenticated(responseSecond.data.userId, accessToken);
+								$timeout(function () {
+									$location.path('/');
+								});
+							});
+						}
 					});
+
+
 				});
 			};
 

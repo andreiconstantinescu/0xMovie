@@ -7,7 +7,7 @@
 define(['angular'], function (angular) {
     'use strict';
     return angular.module('MovieScribe.Services', [])
-        .service('SessionService', ['$cookieStore', function ($cookieStore) {
+        .service('SessionService', ['$cookieStore', '$rootScope', function ($cookieStore, $rootScope) {
             var session = {
                 userID: $cookieStore.get('userID'),
                 authToken: $cookieStore.get('authToken')
@@ -23,6 +23,8 @@ define(['angular'], function (angular) {
                     // Write the current session in cookies
                     $cookieStore.put('userID', session.userID);
                     $cookieStore.put('authToken', session.authToken);
+
+                    $rootScope.$broadcast('currentSessionUpdated');
                 },
                 destroyCurrentSession: function () {
                     console.log("Current session destroyed");
@@ -42,23 +44,39 @@ define(['angular'], function (angular) {
                 }
             }
         }])
-        .service('MovieScribeAPI', ['$http', function ($http) {
+        .service('MovieScribeAPI', ['$http', '$rootScope', 'SessionService', function ($http, $rootScope, SessionService) {
 
             var moviescribeEndpoint = "http://52.16.207.87:8080/MovieScribe/";
+            var currentSession = SessionService.getCurrentSession();
+
+            $rootScope.$on('currentSessionUpdated', function () {
+                currentSession = SessionService.getCurrentSession();
+            });
 
             var service = {
-                getMovies: function () {
-                    var url = "http://86.127.142.109:8080/RecommendationSystem/movies";
+                facebookLogin: function (authToken) {
+                    var url = moviescribeEndpoint + 'facebooklogin' +
+                        '/' + authToken;
                     return $http.get(url);
                 },
                 getAllMovies: function () {
                     var url = moviescribeEndpoint + "movies";
+
+                    console.log("URL getAllMovies", url);
                     return $http.get(url);
                 },
                 getLikedMovies: function () {
-                    var url = moviescribeEndpoint + "liked" +
-                        "/" + "" + // TODO: userID
-                        "/" + ""; // TODO: authToken
+                    var url = moviescribeEndpoint + "likedmovies" +
+                        "/" + currentSession.userID +
+                        "/" + currentSession.authToken;
+
+                    console.log("URL getLikedMovies", url);
+                    return $http.get(url);
+                },
+                getCharts: function () {
+                    var url = moviescribeEndpoint + "charts";
+
+                    console.log("URL getCharts", url);
                     return $http.get(url);
                 },
                 likeMovie: function (movieID) {
@@ -72,7 +90,7 @@ define(['angular'], function (angular) {
 
             return service;
         }])
-        .service('AuthenticationService', ['$location', 'SessionService', function ($location, SessionService) {
+        .service('AuthenticationService', ['$location', 'SessionService', 'MovieScribeAPI', function ($location, SessionService, MovieScribeAPI) {
 
             // Initialize Facebook SDK
             (function () {
@@ -100,9 +118,12 @@ define(['angular'], function (angular) {
                 return (this.currentSession) ? true : false;
             };
 
-            this.setUserAsAuthenticated = function (fbResponse) {
-                console.log("Facebook response", fbResponse);
-                SessionService.createSession(fbResponse.authResponse.userID, fbResponse.authResponse.accessToken);
+            this.loginWithFacebok = function (authToken) {
+                return MovieScribeAPI.facebookLogin(authToken);
+            };
+
+            this.setUserAsAuthenticated = function (userID, authToken) {
+                SessionService.createSession(userID, authToken);
             };
 
             this.logout = function () {
@@ -115,7 +136,7 @@ define(['angular'], function (angular) {
 
             return this;
         }])
-        .factory('WebDatabase', ['MovieScribeAPI', function(MovieScribeAPI) {
+        .factory('WebDatabase', ['$rootScope', 'MovieScribeAPI', function($rootScope, MovieScribeAPI) {
 
             var moviesList = undefined;
             var userLikedMovies = undefined;
@@ -126,18 +147,19 @@ define(['angular'], function (angular) {
                     // Get all movies from eBooksManager API
                     MovieScribeAPI.getAllMovies().then(function (response) {
                         moviesList = response.data;
+                        $rootScope.$broadcast('getAllMoviesDone');
                     });
 
                     // Get all movies the user liked
                     MovieScribeAPI.getLikedMovies().then(function (response) {
-                        console.log("getLikedMovies", response.data);
-                        // TODO userLikedMovies = response.data;
+                        userLikedMovies = response.data;
+                        $rootScope.$broadcast('getLikedMovies');
                     });
 
                     // Get charts
-                    MovieScribeAPI.getCharts.then(function (response) {
-                        console.log("charts", response.data);
-                        // TODO charts = response.data;
+                    MovieScribeAPI.getCharts().then(function (response) {
+                        charts = response.data;
+                        $rootScope.$broadcast('getCharts');
                     });
                 },
                 getAllMovies: function () {

@@ -13,6 +13,7 @@ define([
 		$routeProvider
 			.when('/landingpage', {
 				templateUrl: 'views/landingpage.html',
+				controller: 'MainController',
 				requireLogin: false
 			})
 			.when('/', {
