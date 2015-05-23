@@ -8,11 +8,29 @@ define(['angular'], function (angular) {
 	'use strict';
 	
 	return angular.module('MovieScribe.Controllers', [])
-		.controller('LoginController', ['$scope', 'AuthenticationService', function ($scope, AuthenticationService) {
-			console.log("Initializing Login Controller");
+		.controller('LoginController', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
+
+			$scope.credentials = {};
+
+			$scope.goToLandingPage = function () {
+				$location.path('/');
+			};
+
+			$scope.login = function () {
+				console.log($scope.credentials);
+			};
 		}])
-		.controller('RegisterController', ['$scope', 'AuthenticationService', function ($scope, AuthenticationService) {
-			console.log("Initializing Register Controller");
+		.controller('RegisterController', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
+
+			$scope.credentials = {};
+
+			$scope.goToLandingPage = function () {
+				$location.path('/');
+			};
+
+			$scope.register = function () {
+				console.log($scope.credentials);
+			};
 		}])
 		.controller('MainController', ['$scope', '$rootScope', '$location', '$timeout', '$http', 'AuthenticationService', 'WebDatabase', function ($scope, $rootScope, $location, $timeout, $http, AuthenticationService, WebDatabase) {
 
@@ -140,6 +158,13 @@ define(['angular'], function (angular) {
 
 
 				});
+			};
+
+			$scope.goToLogin = function () {
+				$location.path('/login');
+			};
+			$scope.goToRegister = function () {
+				$location.path('/register');
 			};
 
 			var charts = null;

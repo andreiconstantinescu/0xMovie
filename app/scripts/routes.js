@@ -36,7 +36,7 @@ define([
 		});
 	}])
 	.run(['$rootScope', 'AuthenticationService', '$location', function ($rootScope, AuthenticationService, $location) {
-		
+
 		// Check the auth status for every route chane
 		$rootScope.$on("$routeChangeStart", function (event, next, current) {
 			// If logged out, send to landing page
