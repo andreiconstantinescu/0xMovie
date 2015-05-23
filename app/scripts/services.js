@@ -54,11 +54,6 @@ define(['angular'], function (angular) {
             });
 
             var service = {
-                facebookLogin: function (authToken) {
-                    var url = moviescribeEndpoint + 'facebooklogin' +
-                        '/' + authToken;
-                    return $http.get(url);
-                },
                 getAllMovies: function () {
                     var url = moviescribeEndpoint + "movies";
 
@@ -92,34 +87,11 @@ define(['angular'], function (angular) {
         }])
         .service('AuthenticationService', ['$location', 'SessionService', 'MovieScribeAPI', function ($location, SessionService, MovieScribeAPI) {
 
-            // Initialize Facebook SDK
-            (function () {
-                window.fbAsyncInit = function() {
-                    FB.init({
-                        appId      : '883126045059442',
-                        xfbml      : true,
-                        version    : 'v2.3'
-                    });
-                };
-
-                (function(d, s, id){
-                    var js, fjs = d.getElementsByTagName(s)[0];
-                    if (d.getElementById(id)) {return;}
-                    js = d.createElement(s); js.id = id;
-                    js.src = "//connect.facebook.net/en_US/sdk.js";
-                    fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));
-            })();
-
             this.currentSession = undefined;
 
             this.isUserAuthenticated = function () {
                 this.currentSession = SessionService.getCurrentSession();
                 return (this.currentSession) ? true : false;
-            };
-
-            this.loginWithFacebok = function (authToken) {
-                return MovieScribeAPI.facebookLogin(authToken);
             };
 
             this.setUserAsAuthenticated = function (userID, authToken) {
