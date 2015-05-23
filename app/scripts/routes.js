@@ -13,11 +13,21 @@ define([
 		$routeProvider
 			.when('/landingpage', {
 				templateUrl: 'views/landingpage.html',
-				controller: 'MainController',
+				requireLogin: false
+			})
+			.when('/login', {
+				templateUrl: 'views/login.html',
+				controller: 'LoginController',
+				requireLogin: false
+			})
+			.when('/register', {
+				templateUrl: 'views/register.html',
+				controller: 'RegisterController',
 				requireLogin: false
 			})
 			.when('/', {
 				templateUrl: 'views/main.html',
+				controller: 'MainController',
 				requireLogin: true
 			});
 		

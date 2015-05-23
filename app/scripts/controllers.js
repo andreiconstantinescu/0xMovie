@@ -8,6 +8,12 @@ define(['angular'], function (angular) {
 	'use strict';
 	
 	return angular.module('MovieScribe.Controllers', [])
+		.controller('LoginController', ['$scope', 'AuthenticationService', function ($scope, AuthenticationService) {
+			console.log("Initializing Login Controller");
+		}])
+		.controller('RegisterController', ['$scope', 'AuthenticationService', function ($scope, AuthenticationService) {
+			console.log("Initializing Register Controller");
+		}])
 		.controller('MainController', ['$scope', '$rootScope', '$location', '$timeout', '$http', 'AuthenticationService', 'WebDatabase', function ($scope, $rootScope, $location, $timeout, $http, AuthenticationService, WebDatabase) {
 
 			// This will make the initial requests. (AllMovies, LikedMovies, Charts);
