@@ -54,6 +54,14 @@ define(['angular'], function (angular) {
             });
 
             var service = {
+                login: function (credentials) {
+                    var url = "";
+                    return $http.get(url);
+                },
+                register: function (credentials) {
+                    var url = "";
+                    return $http.get(url);
+                },
                 getAllMovies: function () {
                     var url = moviescribeEndpoint + "movies";
 
@@ -94,8 +102,30 @@ define(['angular'], function (angular) {
                 return (this.currentSession) ? true : false;
             };
 
-            this.setUserAsAuthenticated = function (userID, authToken) {
-                SessionService.createSession(userID, authToken);
+            this.register = function (credentials) {
+
+                // NiceToHave: Encode password
+
+                // Make request to our API to send crendentials and get response
+                MovieScribeAPI.register(credentials).then(function (response) {
+
+                    // Call login with responses to apply this
+
+                });
+            };
+
+            this.login = function (credentials) {
+
+                // NiceToHave: Encode password
+
+                // Make request to our API to send crendentials and get response
+                MovieScribeAPI.login(credentials).then(function (response) {
+                    // Create new session (cookies)
+                    SessionService.createSession(userID, authToken);
+
+                    // Redirect to main page
+                    $location.path('/');
+                });
             };
 
             this.logout = function () {

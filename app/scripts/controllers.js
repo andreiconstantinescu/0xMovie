@@ -123,42 +123,12 @@ define(['angular'], function (angular) {
 				removeGetAllLikedMovies();
 			});
 		}])
-		.controller('LandingPageController', ['$scope', '$location', '$timeout', '$http', 'AuthenticationService', function ($scope, $location, $timeout, $http, AuthenticationService) {
-			
+		.controller('LandingPageController', ['$scope', '$location', '$http', 'AuthenticationService', function ($scope, $location, $http, AuthenticationService) {
+
 			// If user is already authenticated, redirect to home
 			if (AuthenticationService.isUserAuthenticated()) {
                 $location.path('/');
             }
-
-			$scope.facebookLogin = function () {
-				FB.login(function (res) {
-					console.log(res);
-
-					var accessToken = res.authResponse.accessToken;
-					console.log(accessToken);
-
-					AuthenticationService.loginWithFacebok(accessToken).then(function (response) {
-
-						if (response.data) {
-							console.log("RASPOUNDASDAS", response);
-							AuthenticationService.setUserAsAuthenticated(response.ID, accessToken);
-							$timeout(function () {
-								$location.path('/');
-							});
-						} else {
-							AuthenticationService.loginWithFacebok(accessToken).then(function (responseSecond) {
-								console.log("2222RASPOUNDASDAS", responseSecond);
-								AuthenticationService.setUserAsAuthenticated(responseSecond.data.userId, accessToken);
-								$timeout(function () {
-									$location.path('/');
-								});
-							});
-						}
-					});
-
-
-				});
-			};
 
 			$scope.goToLogin = function () {
 				$location.path('/login');
