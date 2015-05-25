@@ -24,7 +24,7 @@ define(['angular'], function (angular) {
                     session.authToken = authToken;
                     session.firstName = firstName;
                     session.lastName = lastName;
-                    session.email = authToken;
+                    session.email = email;
 
                     // Write the current session in cookies
                     $cookieStore.put('userID', session.userID);

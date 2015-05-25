@@ -39,7 +39,9 @@ define(['angular'], function (angular) {
 				}
 			};
 		}])
-		.controller('MainController', ['$scope', '$rootScope', '$location', '$timeout', '$http', 'AuthenticationService', 'WebDatabase', function ($scope, $rootScope, $location, $timeout, $http, AuthenticationService, WebDatabase) {
+		.controller('MainController', ['$scope', '$rootScope', '$location', '$timeout', '$http', 'AuthenticationService', 'WebDatabase', 'SessionService', function ($scope, $rootScope, $location, $timeout, $http, AuthenticationService, WebDatabase, SessionService) {
+
+			$scope.currentSession = SessionService.getCurrentSession();
 
 			// This will make the initial requests. (AllMovies, LikedMovies, Charts);
 			$scope.loading = true;
