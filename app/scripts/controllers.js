@@ -18,6 +18,7 @@ define(['angular'], function (angular) {
 
 			$scope.login = function () {
 				console.log($scope.credentials);
+				AuthenticationService.login($scope.credentials);
 			};
 		}])
 		.controller('RegisterController', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
@@ -30,6 +31,12 @@ define(['angular'], function (angular) {
 
 			$scope.register = function () {
 				console.log($scope.credentials);
+
+				if ($scope.credentials.password == $scope.credentials.password_repeat) {
+					AuthenticationService.register($scope.credentials);
+				} else {
+					$scope.errorMessage = "Passwords doesn't match."
+				}
 			};
 		}])
 		.controller('MainController', ['$scope', '$rootScope', '$location', '$timeout', '$http', 'AuthenticationService', 'WebDatabase', function ($scope, $rootScope, $location, $timeout, $http, AuthenticationService, WebDatabase) {

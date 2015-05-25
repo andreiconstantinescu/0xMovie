@@ -10,19 +10,28 @@ define(['angular'], function (angular) {
         .service('SessionService', ['$cookieStore', '$rootScope', function ($cookieStore, $rootScope) {
             var session = {
                 userID: $cookieStore.get('userID'),
-                authToken: $cookieStore.get('authToken')
+                authToken: $cookieStore.get('authToken'),
+                firstName: $cookieStore.get('firstName'),
+                lastName: $cookieStore.get('lastName'),
+                email: $cookieStore.get('email')
             };
 
             return {
-                createSession: function (userID, authToken) {
+                createSession: function (userID, authToken, firstName, lastName, email) {
                     console.log("Create new session with userID: " + userID + ", authToken: " + authToken);
 
                     session.userID = userID;
                     session.authToken = authToken;
+                    session.firstName = firstName;
+                    session.lastName = lastName;
+                    session.email = authToken;
 
                     // Write the current session in cookies
                     $cookieStore.put('userID', session.userID);
                     $cookieStore.put('authToken', session.authToken);
+                    $cookieStore.put('firstName', session.firstName);
+                    $cookieStore.put('lastName', session.lastName);
+                    $cookieStore.put('email', session.email);
 
                     $rootScope.$broadcast('currentSessionUpdated');
                 },
@@ -31,10 +40,16 @@ define(['angular'], function (angular) {
 
                     session.userID = null;
                     session.authToken = null;
+                    session.firstName = null;
+                    session.lastName = null;
+                    session.email = null;
 
                     // Remove the user session from Cookies
                     $cookieStore.remove('userID');
                     $cookieStore.remove('authToken');
+                    $cookieStore.remove('firstName');
+                    $cookieStore.remove('lastName');
+                    $cookieStore.remove('email');
                 },
                 getCurrentSession: function () {
                     if (session.userID) {
@@ -55,12 +70,39 @@ define(['angular'], function (angular) {
 
             var service = {
                 login: function (credentials) {
-                    var url = "";
-                    return $http.get(url);
+                    var url = moviescribeEndpoint + "login";
+                    return $http({
+                        method: 'POST',
+                        url: url,
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                        transformRequest: function(obj) {
+                            var str = [];
+                            for(var p in obj)
+                                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                            return str.join("&");
+                        },
+                        data: {email: credentials.email, password: credentials.password}
+                    });
                 },
                 register: function (credentials) {
-                    var url = "";
-                    return $http.get(url);
+                    var url = moviescribeEndpoint + "register";
+                    return $http({
+                        method: 'POST',
+                        url: url,
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                        transformRequest: function(obj) {
+                            var str = [];
+                            for(var p in obj)
+                                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                            return str.join("&");
+                        },
+                        data: {
+                            firstName: credentials.firstName,
+                            lastName: credentials.lastName,
+                            email: credentials.email,
+                            password: credentials.password
+                        }
+                    });
                 },
                 getAllMovies: function () {
                     var url = moviescribeEndpoint + "movies";
@@ -95,48 +137,56 @@ define(['angular'], function (angular) {
         }])
         .service('AuthenticationService', ['$location', 'SessionService', 'MovieScribeAPI', function ($location, SessionService, MovieScribeAPI) {
 
-            this.currentSession = undefined;
+            var currentSession = undefined;
+            var service = {
+                isUserAuthenticated: function () {
+                    currentSession = SessionService.getCurrentSession();
+                    return (currentSession) ? true : false;
+                },
+                register: function (credentials) {
+                    // Make request to our API to send crendentials and get response
+                    MovieScribeAPI.register(credentials).then(function (response) {
+                        // Login
+                        MovieScribeAPI.login(credentials).then(function (response) {
+                            // Create new session (cookies)
+                            SessionService.createSession(
+                                response.data.userId,
+                                response.data.authToken,
+                                response.data.firstName,
+                                response.data.lastName,
+                                response.data.email
+                            );
 
-            this.isUserAuthenticated = function () {
-                this.currentSession = SessionService.getCurrentSession();
-                return (this.currentSession) ? true : false;
+                            // Redirect to main page
+                            $location.path('/');
+                        });
+                    });
+                },
+                login: function (credentials) {
+                    // Make request to our API to send crendentials and get response
+                    MovieScribeAPI.login(credentials).then(function (response) {
+                        // Create new session (cookies)
+                        SessionService.createSession(
+                            response.data.userId,
+                            response.data.authToken,
+                            response.data.firstName,
+                            response.data.lastName,
+                            response.data.email
+                        );
+
+                        // Redirect to main page
+                        $location.path('/');
+                    });
+                },
+                logout: function () {
+                    // Delete user data
+                    SessionService.destroyCurrentSession();
+
+                    // Send the user to the landing page
+                    $location.path('/landingpage');
+                }
             };
-
-            this.register = function (credentials) {
-
-                // NiceToHave: Encode password
-
-                // Make request to our API to send crendentials and get response
-                MovieScribeAPI.register(credentials).then(function (response) {
-
-                    // Call login with responses to apply this
-
-                });
-            };
-
-            this.login = function (credentials) {
-
-                // NiceToHave: Encode password
-
-                // Make request to our API to send crendentials and get response
-                MovieScribeAPI.login(credentials).then(function (response) {
-                    // Create new session (cookies)
-                    SessionService.createSession(userID, authToken);
-
-                    // Redirect to main page
-                    $location.path('/');
-                });
-            };
-
-            this.logout = function () {
-                // Delete user data
-                SessionService.destroyCurrentSession();
-
-                // Send the user to the landing page
-                $location.path('/landingpage');
-            };
-
-            return this;
+            return service;
         }])
         .factory('WebDatabase', ['$rootScope', 'MovieScribeAPI', function($rootScope, MovieScribeAPI) {
 
