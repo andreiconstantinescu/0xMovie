@@ -8,7 +8,7 @@ define(['angular'], function (angular) {
 	'use strict';
 	
 	return angular.module('MovieScribe.Controllers', [])
-		.controller('LoginController', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {
+		.controller('LoginController', ['$scope', '$location', 'SessionService', 'AuthenticationService', 'MovieScribeAPI', function ($scope, $location, SessionService, AuthenticationService, MovieScribeAPI) {
 
 			$scope.credentials = {};
 
@@ -17,8 +17,24 @@ define(['angular'], function (angular) {
 			};
 
 			$scope.login = function () {
-				console.log($scope.credentials);
-				AuthenticationService.login($scope.credentials);
+				MovieScribeAPI.login($scope.credentials).then(function (response) {
+					if (response.data.error == true) {
+						$scope.errorMessage = "Email or password incorrect.";
+						return;
+					}
+
+					// Create new session (cookies)
+					SessionService.createSession(
+						response.data.userId,
+						response.data.authToken,
+						response.data.firstName,
+						response.data.lastName,
+						response.data.email
+					);
+
+					// Redirect to main page
+					$location.path('/');
+				});
 			};
 		}])
 		.controller('RegisterController', ['$scope', '$location', 'AuthenticationService', function ($scope, $location, AuthenticationService) {

@@ -187,19 +187,7 @@ define(['angular'], function (angular) {
                 },
                 login: function (credentials) {
                     // Make request to our API to send crendentials and get response
-                    MovieScribeAPI.login(credentials).then(function (response) {
-                        // Create new session (cookies)
-                        SessionService.createSession(
-                            response.data.userId,
-                            response.data.authToken,
-                            response.data.firstName,
-                            response.data.lastName,
-                            response.data.email
-                        );
 
-                        // Redirect to main page
-                        $location.path('/');
-                    });
                 },
                 logout: function () {
                     // Delete user data
