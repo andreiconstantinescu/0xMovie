@@ -111,8 +111,7 @@ define(['angular'], function (angular) {
                     return $http.get(url);
                 },
                 getLikedMovies: function () {
-                    var url = moviescribeEndpoint + "likedmovies" +
-                        "/" + currentSession.userID +
+                    var url = moviescribeEndpoint + "likedmovies/" + currentSession.userID +
                         "/" + currentSession.authToken;
 
                     console.log("URL getLikedMovies", url);
@@ -125,10 +124,34 @@ define(['angular'], function (angular) {
                     return $http.get(url);
                 },
                 likeMovie: function (movieID) {
-                    var url = moviescribeEndpoint + "like" +
-                        "/" + "" + // TODO: userID
-                        "/" + "" + // TODO: authToken
+                    var url = moviescribeEndpoint + "like/" + currentSession.userID +
+                        "/" + currentSession.authToken + // TODO: authToken
                         "/" + movieID.toString();
+                    return $http.get(url);
+                },
+                getMoviesByActor: function (actorName) {
+                    var url = moviescribeEndpoint + "actor/" + actorName.toString();
+                    return $http.get(url);
+                },
+                getMoviesByGenre: function (genre) {
+                    var url = moviescribeEndpoint + "genre/" + genre.toString();
+                    return $http.get(url);
+                },
+                getMoviesByActorAndGenre: function(actorName, genre) {
+                    var url = moviescribeEndpoint + "actor/" + actorName.toString +
+                        "genre/" + genre.toString();
+                    return $http.get(url);
+                },
+                getImageLink: function (imageHash) {
+                    var url = moviescribeEndpoint + "image/" + imageHash;
+                    return $http.get(url);
+                },
+                getTopMovies: function (numberOfMovies) {
+                    var url = moviescribeEndpoint + "top/" + numberOfMovies;
+                    return $http.get(url);
+                },
+                getRecommendations: function () {
+                    var url = moviescribeEndpoint + "recommendations/" + currentSession.userID;
                     return $http.get(url);
                 }
             };

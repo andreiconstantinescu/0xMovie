@@ -6,51 +6,53 @@
 	</nav>
 
 	<div class="container">
-		<div class="starter-template">
+		<div ng-show="loading" class="loading-view">
+			<div class="sk-spinner sk-spinner-rotating-plane"></div>
+			<h3>Loading the best app you've ever seen</h3>
+		</div>
+		<div class="starter-template"  ng-hide="loading">
 			<div>
 				<h1>Welcome</h1>
 				<a href class="lead" ng-click="logout()">(Sign out)</a>
 			</div>
-		</div>
-		<div>
+			<div>
+				<div class="velocity-transition-slideUpIn" ng-show="afiseaza">
+					I've been animated with Velocity and Angular!
+				</div>
 
-			<div class="velocity-transition-slideUpIn" ng-show="afiseaza">
-				I've been animated with Velocity and Angular!
-			</div>
-
-			<form ng-submit="searchMovie()" class="input-group" action="">
-				<input type="text" class="form-control" placeholder="Start by typing a movie name" ng-model="searchInput">
+				<form ng-submit="searchMovie()" class="input-group" action="">
+					<input type="text" class="form-control" placeholder="Start by typing a movie name" ng-model="searchInput">
 			<span class="input-group-btn">
 				<input type="button" class="btn btn-info" value="Search" ng-click="searchMovie()">
-				
+
 			</span>
-			</form>
+				</form>
 
-			<div ng-show="displayMovies" class="recommendation-result">
-				<div ng-repeat="movie in results" class="well">
-					<div class="row">
-						<div class="col-sm-6 movie">
-							<img class='movie-poster' style='width:100%; height: auto' ng-src="{{movie.Poster}}">
-						</div>
-						<div class="col-sm-6">
-							<div class="basic-info">
-								<span class='movie-title'>{{movie.Title}}</span>
-								<span class='movie-year'>({{movie.Year}})</span>
-								<span class='movie-rated'>{{movie.Rated}}</span>
+				<div ng-show="displayMovies" class="recommendation-result">
+					<div ng-repeat="movie in results" class="well">
+						<div class="row">
+							<div class="col-sm-6 movie">
+								<img class='movie-poster' style='width:100%; height: auto' ng-src="{{movie.Poster}}">
 							</div>
+							<div class="col-sm-6">
+								<div class="basic-info">
+									<span class='movie-title'>{{movie.Title}}</span>
+									<span class='movie-year'>({{movie.Year}})</span>
+									<span class='movie-rated'>{{movie.Rated}}</span>
+								</div>
 
-							<div class="votes">
-								<input type="button" class="btn btn-primary" value="Show recommendations" ng-click="showRecommendations()">
-							</div>
-							<hr>
-							<div class="release-info">
-								<span class='movie-runtime'>{{movie.Runtime}}</span>
-								<span class='movie-genre'>{{movie.Genre}}</span>
-								<span class='movie-released'>{{movie.Released}}</span>
-								<span class='movie-country'>{{movie.Country}}</span>
-								<span class='movie-language'>{{movie.Language}}</span>
-							</div>
-							<div class="rating-info">
+								<div class="votes">
+									<input type="button" class="btn btn-primary" value="Show recommendations" ng-click="showRecommendations()">
+								</div>
+								<hr>
+								<div class="release-info">
+									<span class='movie-runtime'>{{movie.Runtime}}</span>
+									<span class='movie-genre'>{{movie.Genre}}</span>
+									<span class='movie-released'>{{movie.Released}}</span>
+									<span class='movie-country'>{{movie.Country}}</span>
+									<span class='movie-language'>{{movie.Language}}</span>
+								</div>
+								<div class="rating-info">
 							<span class="imdb">
 								<span class='movie-ladder'>IMDB Rating:</span>
 								<span class='movie-imdbRating'>{{movie.imdbRating}}</span>
@@ -61,33 +63,34 @@
 								<span class='movie-ladder'>Metascore:</span>
 								<span class='movie-metascore'>{{movie.Metascore}}</span>
 							</span>
-								<div class="awards">
-									<a class='movie-imdbLink' href='http://www.imdb.com/title/{{movie.imdbID}}'>IMDB Link</a>
-									<span class='movie-awards'>{{movie.Awards}}</span>
-								</div>
-								<div class="more-info">
-									<div class='movie-actors'>
-										<h4>Starring</h4>
-										{{movie.Actors}}</div>
-									<div class='movie-writer'>
-										<h4>Written by</h4>
-										{{movie.Writer}}</div>
-									<div class='movie-director'>
-										<h4>Directed by</h4>
-										{{movie.Director}}</div>
-									<div class='movie-plot'>
-										<h4>Plot</h4>{{movie.Plot}}</div>
+									<div class="awards">
+										<a class='movie-imdbLink' href='http://www.imdb.com/title/{{movie.imdbID}}'>IMDB Link</a>
+										<span class='movie-awards'>{{movie.Awards}}</span>
+									</div>
+									<div class="more-info">
+										<div class='movie-actors'>
+											<h4>Starring</h4>
+											{{movie.Actors}}</div>
+										<div class='movie-writer'>
+											<h4>Written by</h4>
+											{{movie.Writer}}</div>
+										<div class='movie-director'>
+											<h4>Directed by</h4>
+											{{movie.Director}}</div>
+										<div class='movie-plot'>
+											<h4>Plot</h4>{{movie.Plot}}</div>
 
+									</div>
 								</div>
 							</div>
 						</div>
+
+
+
 					</div>
-
-
-
 				</div>
-			</div>
 
+			</div>
 		</div>
 	</div>
 	</div>

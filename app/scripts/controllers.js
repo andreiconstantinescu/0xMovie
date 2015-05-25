@@ -42,11 +42,13 @@ define(['angular'], function (angular) {
 		.controller('MainController', ['$scope', '$rootScope', '$location', '$timeout', '$http', 'AuthenticationService', 'WebDatabase', function ($scope, $rootScope, $location, $timeout, $http, AuthenticationService, WebDatabase) {
 
 			// This will make the initial requests. (AllMovies, LikedMovies, Charts);
+			$scope.loading = true;
 			WebDatabase.init();
 
 			// Callback when WebDatabase.getAllMovies is done
 			var removeGetAllMoviesDone = $rootScope.$on('getAllMoviesDone', function () {
 				$scope.movies = WebDatabase.getAllMovies();
+				$scope.loading = false;
 				console.log($scope.movies);
 			});
 
