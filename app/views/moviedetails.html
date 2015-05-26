@@ -1,0 +1,69 @@
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="close(false)" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Movie details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6 movie">
+                        <img class='movie-poster' style='width:100%; height: auto' ng-src="{{movie.Poster}}">
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="basic-info">
+                            <span class='movie-title'>{{movie.Title}}</span>
+                            <span class='movie-year'>({{movie.Year}})</span>
+                            <span class='movie-rated'>{{movie.Rated}}</span>
+                        </div>
+
+                        <div class="votes">
+                            <input type="button" class="btn btn-primary" value="Show recommendations" ng-click="showRecommendations()">
+                        </div>
+                        <hr>
+                        <div class="release-info">
+                            <span class='movie-runtime'>{{movie.Runtime}}</span>
+                            <span class='movie-genre'>{{movie.Genre}}</span>
+                            <span class='movie-released'>{{movie.Released}}</span>
+                            <span class='movie-country'>{{movie.Country}}</span>
+                            <span class='movie-language'>{{movie.Language}}</span>
+                        </div>
+                        <div class="rating-info">
+							<span class="imdb">
+								<span class='movie-ladder'>IMDB Rating:</span>
+								<span class='movie-imdbRating'>{{movie.imdbRating}}</span>
+								<span class='movie-ladder'>IMDB Votes:</span>
+								<span class='movie-imdbVotes'>{{movie.imdbVotes}}</span>
+							</span>
+							<span class="metascore">
+								<span class='movie-ladder'>Metascore:</span>
+								<span class='movie-metascore'>{{movie.Metascore}}</span>
+							</span>
+                            <div class="awards">
+                                <a class='movie-imdbLink' href='http://www.imdb.com/title/{{movie.imdbID}}'>IMDB Link</a>
+                                <span class='movie-awards'>{{movie.Awards}}</span>
+                            </div>
+                            <div class="more-info">
+                                <div class='movie-actors'>
+                                    <h4>Starring</h4>
+                                    {{movie.Actors}}</div>
+                                <div class='movie-writer'>
+                                    <h4>Written by</h4>
+                                    {{movie.Writer}}</div>
+                                <div class='movie-director'>
+                                    <h4>Directed by</h4>
+                                    {{movie.Director}}</div>
+                                <div class='movie-plot'>
+                                    <h4>Plot</h4>{{movie.Plot}}</div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" ng-click="close(true)" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

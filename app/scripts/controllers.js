@@ -57,11 +57,14 @@ define(['angular'], function (angular) {
 		}])
 		.controller('MainController', ['$scope', '$rootScope', '$location', '$timeout', '$http', 'AuthenticationService', 'WebDatabase', 'SessionService', function ($scope, $rootScope, $location, $timeout, $http, AuthenticationService, WebDatabase, SessionService) {
 
-			$scope.currentSession = SessionService.getCurrentSession();
-
 			// This will make the initial requests. (AllMovies, LikedMovies, Charts);
 			$scope.loading = true;
 			WebDatabase.init();
+
+			$scope.movies = WebDatabase.getAllMovies();
+			if($scope.movies && $scope.movies.length) {
+				$scope.loading = false;
+			}
 
 			// Callback when WebDatabase.getAllMovies is done
 			var removeGetAllMoviesDone = $rootScope.$on('getAllMoviesDone', function () {
@@ -136,16 +139,14 @@ define(['angular'], function (angular) {
 					console.log($scope.results);
 					$scope.$apply();
 				});
-				
-				
-				
-				// Extract movie image
-//				var splt = $scope.movie.Poster.split('/')[5];
-//				$scope.imageSrc = 'http://86.127.142.109:8080/RecommendationSystem/image/' + splt.substring(0, splt.length - 4);
 			};
 
-			$scope.logout = function () {
-				AuthenticationService.logout();
+			$scope.openPopupWithMovie = function (item) {
+				console.log("NONO");
+			};
+
+			$scope.fun = function (item) {
+				console.log("AICI AM AJUNS");
 			};
 
 			// Prevent memory leaks
@@ -174,5 +175,38 @@ define(['angular'], function (angular) {
 			//	console.log('charts request', response);
 			//	charts = response;
 			//});
+		}])
+		.controller('WelcomeController', ['$scope', '$rootScope', '$location', 'AuthenticationService', 'MovieScribeAPI', 'SessionService', 'WebDatabase', function ($scope, $rootScope, $location, AuthenticationService, MovieScribeAPI, SessionService, WebDatabase) {
+			console.log("Initializing WelcomeController");
+
+			// Make initial requests
+			WebDatabase.init();
+			$scope.loading = true;
+			$scope.IDLikedMovies = {};
+
+			// UI variables
+			$scope.charts = null;
+
+			$scope.goToMainPage = function () {
+				$location.path('/');
+			};
+
+			$rootScope.$on('getChartsDone', function () {
+				$scope.loading = false;
+				$scope.charts = WebDatabase.getCharts();
+
+				console.log($scope.charts);
+			})
+
+			$rootScope.$on('getLikedMovies', function () {
+				$scope.likedMovies = WebDatabase.getLikedMovies();
+				for (var i = 0; i < $scope.likedMovies.length; i++) {
+					$scope.IDLikedMovies[$scope.likedMovies[i].imdbID] = true;
+				}
+			});
+		}])
+		.controller('MoviePopupController', ['$scope', 'movie', function ($scope, movie) {
+			console.log("MoviePopupController initialized");
+			$scope.movie = movie;
 		}]);
 });
