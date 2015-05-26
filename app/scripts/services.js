@@ -240,6 +240,9 @@ define(['angular'], function (angular) {
                 getLikedMovies: function () {
                     return userLikedMovies;
                 },
+                addToLikedMovies: function (movie) {
+                    userLikedMovies.push(movie);
+                },
                 getCharts: function () {
                     return charts;
                 },

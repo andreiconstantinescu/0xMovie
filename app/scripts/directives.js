@@ -17,7 +17,7 @@ define(['angular'], function(angular) {
             }
 
         }])
-        .directive('recommendationOptions', ['$timeout', 'MovieScribeAPI', 'ModalService', function ($timeout, MovieScribeAPI, ModalService) {
+        .directive('recommendationOptions', ['$timeout', 'MovieScribeAPI', 'ModalService', 'WebDatabase', function ($timeout, MovieScribeAPI, ModalService, WebDatabase) {
 
             return {
                 restrict: 'A',
@@ -28,6 +28,7 @@ define(['angular'], function(angular) {
                             if (response.data.error != true) {
                                 $timeout(function () {
                                     scope.likedMovies.push(movie);
+                                    WebDatabase.addToLikedMovies(movie);
                                     scope.IDLikedMovies[movie.imdbID] = true;
                                 });
 

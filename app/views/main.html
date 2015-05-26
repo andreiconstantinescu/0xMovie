@@ -43,7 +43,7 @@
 
 				<div ng-show="displayMovies" class="recommendation-result">
 					<div ng-repeat="movie in results" class="well">
-						<div class="row">
+						<div class="row" recommendation-options>
 							<div class='movie-title'>{{movie.Title}}</div>
 							<div class="col-sm-6 movie">
 								<img class='movie-poster' style='width:100%; height: auto' ng-src="{{movie.Poster}}">
@@ -52,7 +52,7 @@
 								<div class="basic-info">
 								</div>
 
-								<button class="votes" ng-click="showRecommendations()">
+								<button class="votes" ng-click="likeMovie(movie)">
 									<i style='vertical-align: middle;' class="fa fa-thumbs-o-up fa-2x"></i>
 									<span>Like!</span>
 								</button>

@@ -74,8 +74,8 @@ define(['angular'], function (angular) {
 			});
 
 			// Callback when WebDatabase.getAllLikedMovies is done
-			var removeGetAllLikedMovies = $rootScope.$on('getAllMoviesDone', function () {
-
+			var removeGetAllLikedMovies = $rootScope.$on('getLikedMovies', function () {
+				$scope.likedMovies = WebDatabase.getLikedMovies();
 			});
 			
 			$scope.searchInput = "";
@@ -201,9 +201,10 @@ define(['angular'], function (angular) {
 				}
 			});
 		}])
-		.controller('MoviePopupController', ['$scope', 'movie', function ($scope, movie) {
+		.controller('MoviePopupController', ['$scope', 'WebDatabase', 'movie', function ($scope, WebDatabase, movie) {
 			console.log("MoviePopupController initialized");
 			$scope.movie = movie;
+			$scope.likedMovies = WebDatabase.getLikedMovies();
 		}])
 		.controller('ProfileController', ['$scope', 'WebDatabase', function ($scope, WebDatabase) {
 			$scope.likedMovies = WebDatabase.getLikedMovies();
