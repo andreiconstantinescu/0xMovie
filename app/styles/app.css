@@ -161,7 +161,7 @@ body {
 
 .starter-template {
   padding: 40px 15px;
-  text-align: center;
+  /*text-align: center;*/
 }
 
 
@@ -178,6 +178,8 @@ body {
 
 .movie-title {
 	font-size: 3em;
+  text-align: center;
+  margin-bottom: 0.5em;
 }
 
 .movie-rated {
@@ -185,7 +187,7 @@ body {
 	padding-left: 0.5em;
 	border-left: 1px solid #efefef;
 }
-.movie-runtime, .movie-genre, .movie-released, .movie-country {
+.movie-runtime, .movie-genre, .movie-released, .movie-country, .movie-year {
 	margin-right: 0.5em;
 	padding-right: 0.5em;
 	border-right: 1px solid #efefef;
@@ -194,7 +196,7 @@ body {
 	margin-top: 1em;
 }
 
-.rating-info .imdb span, .movie-imdbLink {
+.rating-info .imdb span{
 	margin-right: 0.5em;
 	padding-right: 0.5em;
 	border-right: 1px solid #efefef;
@@ -232,7 +234,10 @@ body {
 }
 
 .movie-poster{
-	width: 80% !important;
+	width: 50% !important;
+  -webkit-box-shadow: 0px 0px 61px -15px rgba(0,0,0, 1);
+  -moz-box-shadow: 0px 0px 61px -15px rgba(0,0,0, 1);
+  box-shadow: 0px 0px 61px -15px rgba(0,0,0, 1);
 }
 
 .more-info {
@@ -248,7 +253,9 @@ body {
 }
 
 .votes {
-	float: right;
+	padding: .3em .7em;
+  display: block;
+  margin-bottom: 1em;
 }
 
 /* Login&Register */
