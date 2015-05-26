@@ -386,3 +386,12 @@ body {
   background-color: white;
 }
 /*end of overrides*/
+
+
+/* Welcome view */
+.welcome-content {
+  margin-top: 40px;
+}
+.welcome-title {
+  text-align: center;
+}

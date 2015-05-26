@@ -1,0 +1,105 @@
+<div>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-main" account-options>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/">Moviescribe</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentSession.email}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href>Profile</a></li>
+                            <li class="divider"></li>
+                            <li ng-click="logout()"><a href>Sign out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container welcome-content">
+        <div ng-show="welcomeDone">
+            <h2>Thank you. <a class="btn btn-default" href ng-click="goToMainPage()">Done</a></h2>
+        </div>
+        <h2 class="welcome-title">Please select 5 movies you like.</h2>
+
+        <div ng-show="loading" class="loading-view">
+            <div class="sk-spinner sk-spinner-rotating-plane"></div>
+            <h3>Loading amazing stuff.</h3>
+        </div>
+        <div ng-hide="loading" recommendation-options>
+            <h2>Top 10 Action movies</h2>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Like</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in charts.Action">
+                    <td>{{ item.Title }}</td>
+                    <td><a href ng-click="likeMovie(item)">Like</a></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h2>Top 10 Horror movies</h2>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Like</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in charts.Horror">
+                    <td ng-click="openMovie(item)">{{ item.Title }}</td>
+                    <td><a href ng-click="likeMovie(item)">Like</a></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h2>Top 10 Comedy movies</h2>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Like</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in charts.Comedy">
+                    <td>{{ item.Title }}</td>
+                    <td><a href ng-click="likeMovie(item)">Like</a></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h2>Top 10 Adventure movies</h2>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Like</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in charts.Adventure">
+                    <td>{{ item.Title }}</td>
+                    <td><a href ng-click="likeMovie(item)">Like</a></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>

@@ -25,6 +25,11 @@ define([
 				controller: 'RegisterController',
 				requireLogin: false
 			})
+			.when('/welcome', {
+				templateUrl: 'views/welcome.html',
+				controller: 'WelcomeController',
+				requireLogin: true
+			})
 			.when('/', {
 				templateUrl: 'views/main.html',
 				controller: 'MainController',

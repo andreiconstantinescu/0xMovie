@@ -10,7 +10,8 @@ define([
 	'angularCookies',
 	'uiBootstrap',
 	'services',
-	'controllers'
+	'controllers',
+	'directives'
 ], function (ng) {
 	'use strict';
 	
@@ -21,6 +22,7 @@ define([
 		'angularModalService',
 		'MovieScribe.Services',
 		'MovieScribe.Controllers',
+		'MovieScribe.Directives',
 		'angular-velocity',
 		'ngAnimate',
 		'ngCookies'

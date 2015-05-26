@@ -180,8 +180,8 @@ define(['angular'], function (angular) {
                                 response.data.email
                             );
 
-                            // Redirect to main page
-                            $location.path('/');
+                            // Redirect to welcome page
+                            $location.path('/welcome');
                         });
                     });
                 },
@@ -207,23 +207,32 @@ define(['angular'], function (angular) {
 
             return {
                 init: function () {
-                    // Get all movies from eBooksManager API
-                    MovieScribeAPI.getAllMovies().then(function (response) {
-                        moviesList = response.data;
-                        $rootScope.$broadcast('getAllMoviesDone');
-                    });
+                    if (moviesList == undefined) {
+                        // Get all movies from eBooksManager API
+                        MovieScribeAPI.getAllMovies().then(function (response) {
+                            moviesList = response.data;
+                            $rootScope.$broadcast('getAllMoviesDone');
+                        });
+                    }
 
-                    // Get all movies the user liked
-                    MovieScribeAPI.getLikedMovies().then(function (response) {
-                        userLikedMovies = response.data;
-                        $rootScope.$broadcast('getLikedMovies');
-                    });
+                    if(userLikedMovies == undefined) {
+                        // Get all movies the user liked
+                        MovieScribeAPI.getLikedMovies().then(function (response) {
+                            userLikedMovies = response.data;
+                            $rootScope.$broadcast('getLikedMovies');
+                        });
+                    }
 
-                    // Get charts
-                    MovieScribeAPI.getCharts().then(function (response) {
-                        charts = response.data;
-                        $rootScope.$broadcast('getCharts');
-                    });
+                    if (charts == undefined) {
+                        // Get charts
+                        MovieScribeAPI.getCharts().then(function (response) {
+                            charts = response.data;
+                            $rootScope.$broadcast('getChartsDone');
+                        });
+                    }
+                },
+                setCharts: function (chartsObject) {
+                    charts = chartsObject;
                 },
                 getAllMovies: function () {
                     return moviesList;
