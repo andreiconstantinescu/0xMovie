@@ -216,7 +216,7 @@ body {
 }
 .movie-imdbRating {
 	font-size: 2em;
-} 
+}
 
 .movie-imdbVotes {
 	font-size: 1.2em;
@@ -344,3 +344,45 @@ body {
   font-weight: 500;
 }
 /*end of Loading*/
+
+/*Overrides*/
+.navbar-main .navbar-toggle {
+  padding: 10px 6px;
+}
+
+.navbar-main .navbar-toggle .icon-bar {
+  background-color: black;
+}
+
+.navbar-main .navbar-toggle:hover .icon-bar{
+  background-color: white;
+}
+
+@media (min-width: 768px) {
+  #navbar>.navbar-nav>li>a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+  /*color: black;*/
+  background-color: #2B84D2;
+}
+.navbar-inverse .navbar-nav>li>a:hover {
+  /*color: black;*/
+  background-color: #2B84D2;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu>li>a:hover {
+  color: black;
+}
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+  background-color: #2B84D2;
+}
+
+.navbar-inverse .navbar-toggle:hover .icon-bar, .navbar-inverse .navbar-toggle:focus .icon-bar {
+
+  background-color: white;
+}
+/*end of overrides*/
