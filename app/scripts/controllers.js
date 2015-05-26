@@ -89,13 +89,17 @@ define(['angular'], function (angular) {
 						var b = $scope.searchInput.toLowerCase();
 
 						if (a.indexOf(b) > -1) {
-							console.log("AICI");
-//							$scope.movie = $scope.movies[i];
 							$scope.results.push($scope.movies[i]);
 							$scope.displayMovies = true;
 						}
 					}
-					console.log($scope.movie);
+
+					if ($scope.results.length > 0) {
+						$scope.moviesAvailable = true;
+					} else {
+						$scope.moviesAvailable = false;
+					}
+
 					$scope.$apply();
 				});
 			};
