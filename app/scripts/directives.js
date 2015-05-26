@@ -1,7 +1,7 @@
 define(['angular'], function(angular) {
     'use strict';
 
-    return angular.module('MovieScribe.Directives', [])
+    return angular.module('MovieScribe.Directives', ['angularModalService'])
         .directive('accountOptions', ['SessionService', 'AuthenticationService', function (SessionService, AuthenticationService) {
             console.log("Initializing accountOptions");
 
@@ -17,7 +17,7 @@ define(['angular'], function(angular) {
             }
 
         }])
-        .directive('recommendationOptions', ['MovieScribeAPI', function (MovieScribeAPI) {
+        .directive('recommendationOptions', ['MovieScribeAPI', 'ModalService', function (MovieScribeAPI, ModalService) {
 
             return {
                 restrict: 'A',
@@ -31,6 +31,24 @@ define(['angular'], function(angular) {
 
                                 // TODO Update WebDatabase
                             }
+                        });
+                    };
+                    scope.openPopupWithMovie = function (movie) {
+
+                        console.log("AICI");
+
+                        // Just provide a template url, a controller and call 'showModal'.
+                        ModalService.showModal({
+                            templateUrl: "views/moviedetails.html",
+                            controller: "MoviePopupController",
+                            inputs: {
+                                movie: movie
+                            }
+                        }).then(function(modal) {
+                            modal.element.modal();
+                            modal.close.then(function(result) {
+                                $scope.message = result ? "You said Yes" : "You said No";
+                            });
                         });
                     };
                 }
