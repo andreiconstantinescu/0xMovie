@@ -61,6 +61,11 @@ define(['angular'], function (angular) {
 			$scope.loading = true;
 			WebDatabase.init();
 
+			$scope.movies = WebDatabase.getAllMovies();
+			if($scope.movies && $scope.movies.length) {
+				$scope.loading = false;
+			}
+
 			// Callback when WebDatabase.getAllMovies is done
 			var removeGetAllMoviesDone = $rootScope.$on('getAllMoviesDone', function () {
 				$scope.movies = WebDatabase.getAllMovies();

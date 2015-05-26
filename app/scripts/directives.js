@@ -31,16 +31,13 @@ define(['angular'], function(angular) {
                                     scope.IDLikedMovies[movie.imdbID] = true;
                                 });
 
-                                // TODO Display message with OK
-
-                                // TODO Update WebDatabase
+                                if (scope.likedMovies.length > 4) {
+                                    scope.goToMainPage();
+                                }
                             }
                         });
                     };
                     scope.openPopupWithMovie = function (movie) {
-
-                        console.log("AICI");
-
                         // Just provide a template url, a controller and call 'showModal'.
                         ModalService.showModal({
                             templateUrl: "views/moviedetails.html",
