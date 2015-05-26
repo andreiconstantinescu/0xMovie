@@ -141,12 +141,8 @@ define(['angular'], function (angular) {
 				});
 			};
 
-			$scope.openPopupWithMovie = function (item) {
-				console.log("NONO");
-			};
-
-			$scope.fun = function (item) {
-				console.log("AICI AM AJUNS");
+			$scope.goToProfile = function () {
+				$location.path('/profile');
 			};
 
 			// Prevent memory leaks
@@ -208,5 +204,8 @@ define(['angular'], function (angular) {
 		.controller('MoviePopupController', ['$scope', 'movie', function ($scope, movie) {
 			console.log("MoviePopupController initialized");
 			$scope.movie = movie;
+		}])
+		.controller('ProfileController', ['$scope', 'WebDatabase', function ($scope, WebDatabase) {
+			$scope.likedMovies = WebDatabase.getLikedMovies();
 		}]);
 });

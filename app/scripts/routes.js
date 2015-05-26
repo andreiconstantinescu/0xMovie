@@ -30,6 +30,11 @@ define([
 				controller: 'WelcomeController',
 				requireLogin: true
 			})
+			.when('/profile', {
+				templateUrl: 'views/profile.html',
+				controller: 'ProfileController',
+				requireLogin: true
+			})
 			.when('/', {
 				templateUrl: 'views/main.html',
 				controller: 'MainController',

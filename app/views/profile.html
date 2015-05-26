@@ -1,0 +1,39 @@
+<div>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-main" account-options>
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#/">Moviescribe</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentSession.email}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href>Profile</a></li>
+                            <li class="divider"></li>
+                            <li ng-click="logout()"><a href>Sign out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container profile"><br/>
+        <h2>Hello {{ currentSession.firstName }} {{ currentSession.lastName }}</h2>
+
+        <div class="liked-movies">
+            <h5>Liked movies:</h5>
+            <div class="well" ng-repeat="movie in likedMovies">
+                <img ng-src="{{movie.Poster}}" alt=""/>
+                <h4>{{movie.Title}}</h4>
+            </div>
+        </div>
+    </div>
+
+</div>
