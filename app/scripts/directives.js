@@ -28,6 +28,7 @@ define(['angular'], function(angular) {
                             if (response.data.error != true) {
                                 $timeout(function () {
                                     scope.likedMovies.push(movie);
+                                    scope.IDLikedMovies[movie.imdbID] = true;
                                 });
 
                                 // TODO Display message with OK

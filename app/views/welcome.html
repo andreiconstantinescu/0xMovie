@@ -49,7 +49,12 @@
                 <tbody>
                 <tr ng-repeat="item in charts.Action">
                     <td><a ng-click="openPopupWithMovie(item)">{{ item.Title }}</a></td>
-                    <td><a href ng-click="likeMovie(item)">Like</a></td>
+                    <td>
+                        <a href ng-click="likeMovie(item)">
+                            <span ng-hide="IDLikedMovies[item.imdbID]">Like</span>
+                        </a>
+                        <span ng-show="IDLikedMovies[item.imdbID]"><b>Liked</b></span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -65,7 +70,12 @@
                 <tbody>
                 <tr ng-repeat="item in charts.Horror">
                     <td><a ng-click="openPopupWithMovie(item)">{{ item.Title }}</a></td>
-                    <td><a href ng-click="likeMovie(item)">Like</a></td>
+                    <td>
+                        <a href ng-click="likeMovie(item)">
+                            <span ng-hide="IDLikedMovies[item.imdbID]">Like</span>
+                        </a>
+                        <span ng-show="IDLikedMovies[item.imdbID]"><b>Liked</b></span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -81,7 +91,12 @@
                 <tbody>
                 <tr ng-repeat="item in charts.Comedy">
                     <td><a ng-click="openPopupWithMovie(item)">{{ item.Title }}</a></td>
-                    <td><a href ng-click="likeMovie(item)">Like</a></td>
+                    <td>
+                        <a href ng-click="likeMovie(item)">
+                            <span ng-hide="IDLikedMovies[item.imdbID]">Like</span>
+                        </a>
+                        <span ng-show="IDLikedMovies[item.imdbID]"><b>Liked</b></span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -97,7 +112,12 @@
                 <tbody>
                 <tr ng-repeat="item in charts.Adventure">
                     <td><a ng-click="openPopupWithMovie(item)">{{ item.Title }}</a></td>
-                    <td><a href ng-click="likeMovie(item)">Like</a></td>
+                    <td>
+                        <a href ng-click="likeMovie(item)">
+                            <span ng-hide="IDLikedMovies[item.imdbID]">Like</span>
+                        </a>
+                        <span ng-show="IDLikedMovies[item.imdbID]"><b>Liked</b></span>
+                    </td>
                 </tr>
                 </tbody>
             </table>

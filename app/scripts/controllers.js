@@ -177,6 +177,7 @@ define(['angular'], function (angular) {
 			// Make initial requests
 			WebDatabase.init();
 			$scope.loading = true;
+			$scope.IDLikedMovies = {};
 
 			// UI variables
 			$scope.charts = null;
@@ -192,9 +193,11 @@ define(['angular'], function (angular) {
 				console.log($scope.charts);
 			})
 
-			$scope.$on('getLikedMovies', function () {
+			$rootScope.$on('getLikedMovies', function () {
 				$scope.likedMovies = WebDatabase.getLikedMovies();
-				console.log($scope.likedMovies);
+				for (var i = 0; i < $scope.likedMovies.length; i++) {
+					$scope.IDLikedMovies[$scope.likedMovies[i].imdbID] = true;
+				}
 			});
 		}])
 		.controller('MoviePopupController', ['$scope', 'movie', function ($scope, movie) {
