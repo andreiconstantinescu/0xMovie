@@ -192,6 +192,10 @@ define(['angular'], function (angular) {
 				console.log($scope.charts);
 			})
 
+			$scope.$on('getLikedMovies', function () {
+				$scope.likedMovies = WebDatabase.getLikedMovies();
+				console.log($scope.likedMovies);
+			});
 		}])
 		.controller('MoviePopupController', ['$scope', 'movie', function ($scope, movie) {
 			console.log("MoviePopupController initialized");

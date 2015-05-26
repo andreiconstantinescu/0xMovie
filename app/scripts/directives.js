@@ -17,15 +17,18 @@ define(['angular'], function(angular) {
             }
 
         }])
-        .directive('recommendationOptions', ['MovieScribeAPI', 'ModalService', function (MovieScribeAPI, ModalService) {
+        .directive('recommendationOptions', ['$timeout', 'MovieScribeAPI', 'ModalService', function ($timeout, MovieScribeAPI, ModalService) {
 
             return {
                 restrict: 'A',
                 link: function link(scope, element, attrs) {
-                    scope.likeMovie = function (movieID) {
-                        MovieScribeAPI.likeMovie(movieID).then(function (response) {
+                    scope.likeMovie = function (movie) {
+                        MovieScribeAPI.likeMovie(movie.imdbID).then(function (response) {
                             console.log(response);
                             if (response.data.error != true) {
+                                $timeout(function () {
+                                    scope.likedMovies.push(movie);
+                                });
 
                                 // TODO Display message with OK
 

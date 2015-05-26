@@ -28,13 +28,16 @@
         <div ng-show="welcomeDone">
             <h2>Thank you. <a class="btn btn-default" href ng-click="goToMainPage()">Done</a></h2>
         </div>
-        <h2 class="welcome-title">Please select 5 movies you like.</h2>
+
 
         <div ng-show="loading" class="loading-view">
             <div class="sk-spinner sk-spinner-rotating-plane"></div>
             <h3>Loading amazing stuff.</h3>
         </div>
         <div ng-hide="loading" recommendation-options>
+            <h2 class="welcome-title">Please select 5 movies you like.</h2>
+            <h4 class="welcome-title">Total movies liked: {{ likedMovies.length }}</h4>
+
             <h2>Top 10 Action movies</h2>
             <table class="table table-bordered">
                 <thead>
