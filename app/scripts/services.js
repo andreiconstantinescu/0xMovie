@@ -497,10 +497,12 @@ define(['angular'], function (angular) {
             };
             return service;
         }])
-        .factory('WebDatabase', ['$rootScope', 'MovieScribeAPI', function($rootScope, MovieScribeAPI) {
+        .factory('WebDatabase', ['$rootScope', 'MovieScribeAPI', 'Storage', function($rootScope, MovieScribeAPI, Storage) {
 
-            var moviesList = undefined;
-            var userLikedMovies = undefined;
+            Storage._initialize({debug: false});
+
+            var moviesList = Storage.read('MovieScribe.Movies') || undefined;
+            var userLikedMovies = Storage.read('MovieScribe.LikedMovies') || undefined;
             var charts = undefined;
 
             return {
@@ -512,6 +514,7 @@ define(['angular'], function (angular) {
                         // Get all movies from eBooksManager API
                         MovieScribeAPI.getAllMovies().then(function (response) {
                             moviesList = response.data;
+                            Storage.save('MovieScribe.Movies', response.data);
                             $rootScope.$broadcast('getAllMoviesDone');
                         });
                     }
@@ -520,6 +523,7 @@ define(['angular'], function (angular) {
                         // Get all movies the user liked
                         MovieScribeAPI.getLikedMovies().then(function (response) {
                             userLikedMovies = response.data;
+                            Storage.save('MovieScribe.LikedMovies', response.data);
                             $rootScope.$broadcast('getLikedMovies');
                         });
                     }
@@ -543,6 +547,7 @@ define(['angular'], function (angular) {
                 },
                 addToLikedMovies: function (movie) {
                     userLikedMovies.push(movie);
+                    Storage.save('MovieScribe.LikedMovies', userLikedMovies);
                 },
                 getCharts: function () {
                     return charts;
