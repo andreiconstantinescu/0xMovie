@@ -456,7 +456,7 @@ define(['angular'], function (angular) {
 
             return service;
         }])
-        .service('AuthenticationService', ['$location', 'SessionService', 'MovieScribeAPI', function ($location, SessionService, MovieScribeAPI) {
+        .service('AuthenticationService', ['$location', 'SessionService', 'MovieScribeAPI', 'Storage', function ($location, SessionService, MovieScribeAPI, Storage) {
 
             var currentSession = undefined;
             var service = {
@@ -490,6 +490,7 @@ define(['angular'], function (angular) {
                 logout: function () {
                     // Delete user data
                     SessionService.destroyCurrentSession();
+                    Storage.deleteAllForApp();
 
                     // Send the user to the landing page
                     $location.path('/landingpage');
