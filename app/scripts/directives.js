@@ -2,20 +2,23 @@ define(['angular'], function(angular) {
     'use strict';
 
     return angular.module('MovieScribe.Directives', ['angularModalService'])
-        .directive('accountOptions', ['SessionService', 'AuthenticationService', function (SessionService, AuthenticationService) {
+        .directive('accountOptions', ['$location', 'SessionService', 'AuthenticationService', 'MovieScribeAPI', function ($location, SessionService, AuthenticationService, MovieScribeAPI) {
             console.log("Initializing accountOptions");
-
             return {
                 restrict: 'A',
                 link: function link(scope, element, attrs) {
                     scope.currentSession = SessionService.getCurrentSession();
+
+                    scope.showRecommendations = function () {
+                        $location.path('/recommendations');
+
+                    };
 
                     scope.logout = function () {
                         AuthenticationService.logout();
                     };
                 }
             }
-
         }])
         .directive('recommendationOptions', ['$timeout', 'MovieScribeAPI', 'ModalService', 'WebDatabase', function ($timeout, MovieScribeAPI, ModalService, WebDatabase) {
 
@@ -54,12 +57,7 @@ define(['angular'], function(angular) {
                             });
                         });
                     };
-                    scope.showRecommendations = function () {
-                        console.log("Trying to get recommendations");
-                        MovieScribeAPI.getRecommendations().then(function (response) {
-                            console.log(response.data);
-                        });
-                    };
+
                 }
             };
         }]);

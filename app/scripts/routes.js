@@ -35,6 +35,11 @@ define([
 				controller: 'ProfileController',
 				requireLogin: true
 			})
+			.when('/recommendations', {
+				templateUrl: 'views/recommendations.html',
+				controller: 'RecommendationsController',
+				requireLogin: true
+			})
 			.when('/', {
 				templateUrl: 'views/main.html',
 				controller: 'MainController',

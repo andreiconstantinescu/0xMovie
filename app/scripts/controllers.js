@@ -221,5 +221,19 @@ define(['angular'], function (angular) {
 		}])
 		.controller('ProfileController', ['$scope', 'WebDatabase', function ($scope, WebDatabase) {
 			$scope.likedMovies = WebDatabase.getLikedMovies();
+		}])
+		.controller('RecommendationsController', ['$scope', 'MovieScribeAPI', 'WebDatabase', function ($scope, MovieScribeAPI, WebDatabase) {
+			console.log("Initializing RecommendationsController");
+
+			$scope.IDUserLikedMovies = WebDatabase.getIDUserLikedMovies();
+
+			$scope.loading = true;
+			MovieScribeAPI.getRecommendations().then(function (response) {
+
+				console.log(response.data);
+
+				$scope.loading = false;
+				$scope.recommendations = response.data;
+			});
 		}]);
 });
