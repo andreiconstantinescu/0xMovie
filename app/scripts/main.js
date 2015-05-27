@@ -5,12 +5,12 @@
 require.config({
 	baseUrl: './scripts',
 	paths: {
-		'domReady': '../../bower_components/requirejs-domready/domReady',
-		'angular': '../../bower_components/angular/angular',
-		'angularRoute': '../../bower_components/angular-route/angular-route',
-		'uiBootstrap': '../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min',
-		'angular-velocity': '../../bower_components/angular-velocity/angular-velocity.min',
-		'angularCookies': '../../bower_components/angular-cookies/angular-cookies'
+		'domReady': '../bower_components/requirejs-domready/domReady',
+		'angular': '../bower_components/angular/angular',
+		'angularRoute': '../bower_components/angular-route/angular-route',
+		'uiBootstrap': '../bower_components/angular-bootstrap/ui-bootstrap-tpls.min',
+		'angular-velocity': '../bower_components/angular-velocity/angular-velocity.min',
+		'angularCookies': '../bower_components/angular-cookies/angular-cookies'
 	},
 	shim: {
 		'angular': {
