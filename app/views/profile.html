@@ -25,10 +25,16 @@
     </nav>
 
     <div class="container profile"><br/>
-        <h2>Hello {{ currentSession.firstName }} {{ currentSession.lastName }}</h2>
+      <div class="profile-info">
+        <h1>{{ currentSession.firstName }} {{ currentSession.lastName }}</h1>
+        <div class="profile-personal-info well recommendation-result">
+          <h2>Information</h2>
+          Email: {{ currentSession.email }}
+        </div>
+      </div>
 
         <div class="liked-movies">
-            <h5>Liked movies:</h5>
+            <!-- <h5>Liked movies:</h5> -->
             <div class="well" ng-repeat="movie in likedMovies">
                 <div class="row">
                     <div class='movie-title'>{{movie.Title}}</div>
