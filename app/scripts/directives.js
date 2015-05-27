@@ -24,8 +24,6 @@ define(['angular'], function(angular) {
                 link: function link(scope, element, attrs) {
                     scope.likeMovie = function (movie) {
 
-                        console.log("AICIC");
-
                         MovieScribeAPI.likeMovie(movie.imdbID).then(function (response) {
                             console.log(response);
                             if (response.data.error != true) {
@@ -54,6 +52,12 @@ define(['angular'], function(angular) {
                             modal.close.then(function(result) {
                                 $scope.message = result ? "You said Yes" : "You said No";
                             });
+                        });
+                    };
+                    scope.showRecommendations = function () {
+                        console.log("Trying to get recommendations");
+                        MovieScribeAPI.getRecommendations().then(function (response) {
+                            console.log(response.data);
                         });
                     };
                 }
