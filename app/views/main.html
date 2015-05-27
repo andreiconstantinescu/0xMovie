@@ -52,9 +52,15 @@
 								<div class="basic-info">
 								</div>
 
-								<button class="votes" ng-click="likeMovie(movie)">
-									<i style='vertical-align: middle;' class="fa fa-thumbs-o-up fa-2x"></i>
-									<span>Like!</span>
+								<button ng-hide="IDUserLikedMovies[movie.imdbID]" class="votes" ng-click="likeMovie(movie)">
+									<span>
+										<i style='vertical-align: middle;' class="fa fa-thumbs-o-up fa-2x"></i>
+										Like!</span>
+								</button>
+								<button ng-show="IDUserLikedMovies[movie.imdbID]" class="votes">
+									<span>
+										<i style='vertical-align: middle;' class="fa fa-thumbs-o-up fa-2x"></i>
+										Liked</span>
 								</button>
 								<div class="release-info">
 									<span class='movie-year'>({{movie.Year}})</span>
