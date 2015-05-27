@@ -181,16 +181,24 @@ define(['angular'], function (angular) {
 			//	charts = response;
 			//});
 		}])
-		.controller('WelcomeController', ['$scope', '$rootScope', '$location', 'AuthenticationService', 'MovieScribeAPI', 'SessionService', 'WebDatabase', function ($scope, $rootScope, $location, AuthenticationService, MovieScribeAPI, SessionService, WebDatabase) {
+		.controller('WelcomeController', ['$scope', '$rootScope', '$location', '$timeout', 'AuthenticationService', 'MovieScribeAPI', 'SessionService', 'WebDatabase', function ($scope, $rootScope, $location, $timeout, AuthenticationService, MovieScribeAPI, SessionService, WebDatabase) {
 			console.log("Initializing WelcomeController");
 
 			// Make initial requests
 			WebDatabase.init();
 			$scope.loading = true;
 			$scope.IDLikedMovies = {};
-			$scope.movies = WebDatabase.getAllMovies();
-			$scope.likedMovies = WebDatabase.getLikedMovies();
-			$scope.IDLikedMovies = WebDatabase.getIDUserLikedMovies();
+
+			$timeout(function () {
+				$scope.movies = WebDatabase.getAllMovies();
+				$scope.likedMovies = WebDatabase.getLikedMovies();
+				$scope.charts = WebDatabase.getCharts();
+				$scope.IDLikedMovies = WebDatabase.getIDUserLikedMovies();
+
+				if ($scope.charts) {
+					$scope.loading = false;
+				}
+			});
 
 			// UI variables
 			$scope.charts = null;
@@ -202,8 +210,6 @@ define(['angular'], function (angular) {
 			$rootScope.$on('getChartsDone', function () {
 				$scope.loading = false;
 				$scope.charts = WebDatabase.getCharts();
-
-				console.log($scope.charts);
 			});
 
 			$rootScope.$on('getLikedMovies', function () {

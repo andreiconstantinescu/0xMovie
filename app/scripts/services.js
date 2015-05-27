@@ -505,12 +505,10 @@ define(['angular'], function (angular) {
             var moviesList = Storage.read('MovieScribe.Movies') || undefined;
             var userLikedMovies = Storage.read('MovieScribe.LikedMovies') || undefined;
             var IDUserLikedMovies = Storage.read('MovieScribe.IDUserLikedMovies') || {};
-            var charts = undefined;
+            var charts = Storage.read('MovieScribe.Charts') || undefined;
 
             return {
                 init: function () {
-
-                    console.log("INIT", moviesList, userLikedMovies, charts);
 
                     if (moviesList == undefined) {
                         // Get all movies from eBooksManager API
@@ -542,6 +540,7 @@ define(['angular'], function (angular) {
                         MovieScribeAPI.getCharts().then(function (response) {
                             charts = response.data;
                             $rootScope.$broadcast('getChartsDone');
+                            Storage.save('MovieScribe.Charts', response.data);
                         });
                     }
                 },
