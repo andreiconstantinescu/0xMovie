@@ -224,6 +224,7 @@ define(['angular'], function (angular) {
 			console.log("MoviePopupController initialized");
 			$scope.movie = movie;
 			$scope.likedMovies = WebDatabase.getLikedMovies();
+			$scope.IDUserLikedMovies = WebDatabase.getIDUserLikedMovies();
 		}])
 		.controller('ProfileController', ['$scope', 'WebDatabase', function ($scope, WebDatabase) {
 			$scope.likedMovies = WebDatabase.getLikedMovies();
