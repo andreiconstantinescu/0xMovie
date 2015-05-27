@@ -62,6 +62,8 @@ define(['angular'], function (angular) {
 			WebDatabase.init();
 
 			$scope.movies = WebDatabase.getAllMovies();
+			$scope.IDUserLikedMovies = WebDatabase.getIDUserLikedMovies();
+			console.log($scope.IDUserLikedMovies = WebDatabase.getIDUserLikedMovies());
 			if($scope.movies && $scope.movies.length) {
 				$scope.loading = false;
 			}
@@ -77,7 +79,13 @@ define(['angular'], function (angular) {
 			var removeGetAllLikedMovies = $rootScope.$on('getLikedMovies', function () {
 				$scope.likedMovies = WebDatabase.getLikedMovies();
 			});
-			
+
+			// Callback when WebDatabase.getIDUserLikedMovies
+			var removeGetIDUserLikedMovies = $rootScope.$on('getIDUserLikedMovies', function () {
+				$scope.IDUserLikedMovies = WebDatabase.getIDUserLikedMovies();
+				console.log($scope.IDUserLikedMovies);
+			});
+
 			$scope.searchInput = "";
 			$scope.displayMovies = false;
 			$scope.movie = null;
@@ -149,6 +157,7 @@ define(['angular'], function (angular) {
 			$scope.$on('$destroy', function () {
 				removeGetAllMoviesDone();
 				removeGetAllLikedMovies();
+				removeGetIDUserLikedMovies();
 			});
 		}])
 		.controller('LandingPageController', ['$scope', '$location', '$http', 'AuthenticationService', function ($scope, $location, $http, AuthenticationService) {
@@ -179,6 +188,9 @@ define(['angular'], function (angular) {
 			WebDatabase.init();
 			$scope.loading = true;
 			$scope.IDLikedMovies = {};
+			$scope.movies = WebDatabase.getAllMovies();
+			$scope.likedMovies = WebDatabase.getLikedMovies();
+			$scope.IDLikedMovies = WebDatabase.getIDUserLikedMovies();
 
 			// UI variables
 			$scope.charts = null;
@@ -196,9 +208,10 @@ define(['angular'], function (angular) {
 
 			$rootScope.$on('getLikedMovies', function () {
 				$scope.likedMovies = WebDatabase.getLikedMovies();
-				for (var i = 0; i < $scope.likedMovies.length; i++) {
-					$scope.IDLikedMovies[$scope.likedMovies[i].imdbID] = true;
-				}
+			});
+
+			$rootScope.$on('getIDUserLikedMovies', function () {
+				$scope.IDLikedMovies = WebDatabase.getIDUserLikedMovies();
 			});
 		}])
 		.controller('MoviePopupController', ['$scope', 'WebDatabase', 'movie', function ($scope, WebDatabase, movie) {
