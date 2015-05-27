@@ -504,6 +504,7 @@ define(['angular'], function (angular) {
 
             var moviesList = Storage.read('MovieScribe.Movies') || undefined;
             var userLikedMovies = Storage.read('MovieScribe.LikedMovies') || undefined;
+            var IDUserLikedMovies = Storage.read('MovieScribe.IDUserLikedMovies') || {};
             var charts = undefined;
 
             return {
@@ -526,6 +527,13 @@ define(['angular'], function (angular) {
                             userLikedMovies = response.data;
                             Storage.save('MovieScribe.LikedMovies', response.data);
                             $rootScope.$broadcast('getLikedMovies');
+
+                            for (var i = 0; i < userLikedMovies.length; i++) {
+                                IDUserLikedMovies.push(userLikedMovies[i].imdbID);
+                            }
+
+                            Storage.save('MovieScribe.IDUserLikedMovies', IDUserLikedMovies);
+                            $rootScope.$broadcast('getIDUserLikedMovies');
                         });
                     }
 
@@ -546,9 +554,15 @@ define(['angular'], function (angular) {
                 getLikedMovies: function () {
                     return userLikedMovies;
                 },
+                getIDUserLikedMovies: function () {
+                    return IDUserLikedMovies;
+                },
                 addToLikedMovies: function (movie) {
                     userLikedMovies.push(movie);
                     Storage.save('MovieScribe.LikedMovies', userLikedMovies);
+
+                    IDUserLikedMovies[movie.imdbID] = true;
+                    Storage.save('MovieScribe.IDUserLikedMovies', IDUserLikedMovies);
                 },
                 getCharts: function () {
                     return charts;
