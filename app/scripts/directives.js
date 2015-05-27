@@ -11,7 +11,10 @@ define(['angular'], function(angular) {
 
                     scope.showRecommendations = function () {
                         $location.path('/recommendations');
+                    };
 
+                    scope.goToTopsPage = function () {
+                        $location.path('/welcome');
                     };
 
                     scope.logout = function () {
@@ -26,7 +29,6 @@ define(['angular'], function(angular) {
                 restrict: 'A',
                 link: function link(scope, element, attrs) {
                     scope.likeMovie = function (movie) {
-
                         MovieScribeAPI.likeMovie(movie.imdbID).then(function (response) {
                             console.log(response);
                             if (response.data.error != true) {
@@ -35,10 +37,6 @@ define(['angular'], function(angular) {
                                     WebDatabase.addToLikedMovies(movie);
                                     scope.IDLikedMovies[movie.imdbID] = true;
                                 });
-
-                                if (scope.likedMovies.length > 4) {
-                                    scope.goToMainPage();
-                                }
                             }
                         });
                     };
@@ -57,7 +55,6 @@ define(['angular'], function(angular) {
                             });
                         });
                     };
-
                 }
             };
         }]);
