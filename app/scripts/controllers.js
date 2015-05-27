@@ -192,7 +192,7 @@ define(['angular'], function (angular) {
 				$scope.charts = WebDatabase.getCharts();
 
 				console.log($scope.charts);
-			})
+			});
 
 			$rootScope.$on('getLikedMovies', function () {
 				$scope.likedMovies = WebDatabase.getLikedMovies();

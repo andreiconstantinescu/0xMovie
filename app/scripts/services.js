@@ -207,6 +207,9 @@ define(['angular'], function (angular) {
 
             return {
                 init: function () {
+
+                    console.log("INIT", moviesList, userLikedMovies, charts);
+
                     if (moviesList == undefined) {
                         // Get all movies from eBooksManager API
                         MovieScribeAPI.getAllMovies().then(function (response) {

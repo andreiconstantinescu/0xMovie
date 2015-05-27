@@ -23,11 +23,14 @@ define(['angular'], function(angular) {
                 restrict: 'A',
                 link: function link(scope, element, attrs) {
                     scope.likeMovie = function (movie) {
+
+                        console.log("AICIC");
+
                         MovieScribeAPI.likeMovie(movie.imdbID).then(function (response) {
                             console.log(response);
                             if (response.data.error != true) {
                                 $timeout(function () {
-                                    scope.likedMovies.push(movie);
+                                    //scope.likedMovies.push(movie);
                                     WebDatabase.addToLikedMovies(movie);
                                     scope.IDLikedMovies[movie.imdbID] = true;
                                 });
