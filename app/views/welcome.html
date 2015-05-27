@@ -11,6 +11,11 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                      <div class='accept-button'>
+                        <button class="btn btn-default welcome-title" ng-click="goToMainPage()">Done Selecting</button>
+                      </div>
+                    </li>
                     <li><a href ng-click="showRecommendations()">Show recommendations</a></li>
                     <li><a href ng-click="goToTopsPage()">Tops</a></li>
                     <li class="dropdown">
@@ -29,7 +34,7 @@
     <div class="container welcome-content">
         <div ng-show="welcomeDone">
             <h2>Thank you. <a class="btn btn-default" href ng-click="goToMainPage()">Done</a></h2>
-        </div>
+      </div>
 
 
         <div ng-show="loading" class="loading-view">
@@ -37,7 +42,6 @@
             <h3>Loading amazing stuff.</h3>
         </div>
         <div ng-hide="loading" recommendation-options>
-            <button class="btn btn-default welcome-title" ng-click="goToMainPage()">Done</button>
             <h2 class="welcome-title" style='margin-top: 2em;'>Please select 5 movies you like.</h2>
             <h4 class="welcome-title" style=' margin-bottom: 1em'>Total movies liked: {{ likedMovies.length }}</h4>
 
