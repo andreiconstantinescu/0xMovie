@@ -17,6 +17,10 @@ define(['angular'], function(angular) {
                         $location.path('/welcome');
                     };
 
+                    scope.goToProfile = function () {
+                        $location.path('/profile');
+                    };
+
                     scope.logout = function () {
                         AuthenticationService.logout();
                     };

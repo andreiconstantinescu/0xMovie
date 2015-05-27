@@ -29,7 +29,10 @@
         <h1>{{ currentSession.firstName }} {{ currentSession.lastName }}</h1>
         <div class="profile-personal-info well recommendation-result">
           <h2>Information</h2>
-          Email: {{ currentSession.email }}
+            <p>First Name: {{ currentSession.firstName }}</p>
+            <p>Last Name: {{ currentSession.lastName }}</p>
+            <p>Email: {{ currentSession.email }}</p>
+            <p>Number of liked movies: {{likedMovies.length}}</p>
         </div>
       </div>
 

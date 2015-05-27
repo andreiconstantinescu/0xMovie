@@ -227,6 +227,10 @@ define(['angular'], function (angular) {
 		}])
 		.controller('ProfileController', ['$scope', 'WebDatabase', function ($scope, WebDatabase) {
 			$scope.likedMovies = WebDatabase.getLikedMovies();
+
+			$scope.likedMovies = WebDatabase.getLikedMovies();
+
+			console.log($scope.likedMovies);
 		}])
 		.controller('RecommendationsController', ['$scope', 'MovieScribeAPI', 'WebDatabase', function ($scope, MovieScribeAPI, WebDatabase) {
 			console.log("Initializing RecommendationsController");
