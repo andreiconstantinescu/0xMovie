@@ -32,10 +32,12 @@
             <div class="sk-spinner sk-spinner-rotating-plane"></div>
             <h3>Getting recomendations</h3>
         </div>
-        <div ng-hide="loading">
+        <div ng-hide="loading" style='margin-top: 5em'>
             <h1>Here are your recommendations</h1>
+        </div>
 
-            <div ng-repeat="movie in recommendations" class="well">
+
+            <div ng-repeat="movie in recommendations" class="well recommendation-result">
                 <div class="row" recommendation-options>
                     <div class='movie-title'>{{movie.Title}}</div>
                     <div class="col-sm-6 movie">
@@ -83,10 +85,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
 
-    </div>
+          </div>
 
 </div>
